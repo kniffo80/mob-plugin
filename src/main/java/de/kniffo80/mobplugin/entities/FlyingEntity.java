@@ -6,6 +6,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.animal.Animal;
 
@@ -90,72 +91,75 @@ public abstract class FlyingEntity extends BaseEntity {
 
     @Override
     public Vector3 updateMove(int tickDiff) {
-        if (!this.isMovement()) {
-            return null;
-        }
-
-        if (this.isKnockback()) {
-            this.move(this.motionX * tickDiff, this.motionY * tickDiff, this.motionZ * tickDiff);
+        if (MobPlugin.MOB_AI_ENABLED) {
+            if (!this.isMovement()) {
+                return null;
+            }
+    
+            if (this.isKnockback()) {
+                this.move(this.motionX * tickDiff, this.motionY * tickDiff, this.motionZ * tickDiff);
+                this.updateMovement();
+                return null;
+            }
+    
+            if (this.followTarget != null && !this.followTarget.closed && this.followTarget.isAlive()) {
+                double x = this.followTarget.x - this.x;
+                double y = this.followTarget.y - this.y;
+                double z = this.followTarget.z - this.z;
+    
+                double diff = Math.abs(x) + Math.abs(z);
+                if (this.stayTime > 0 || this.distance(this.followTarget) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
+                    this.motionX = 0;
+                    this.motionZ = 0;
+                } else {
+                    this.motionX = this.getSpeed() * 0.15 * (x / diff);
+                    this.motionZ = this.getSpeed() * 0.15 * (z / diff);
+                    this.motionY = this.getSpeed() * 0.27 * (y / diff);
+                }
+                this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
+                this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
+            }
+    
+            Vector3 before = this.target;
+            this.checkTarget();
+            if (this.target instanceof EntityCreature || before != this.target) {
+                double x = this.target.x - this.x;
+                double y = this.target.y - this.y;
+                double z = this.target.z - this.z;
+    
+                double diff = Math.abs(x) + Math.abs(z);
+                if (this.stayTime > 0 || this.distance(this.target) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
+                    this.motionX = 0;
+                    this.motionZ = 0;
+                } else {
+                    this.motionX = this.getSpeed() * 0.15 * (x / diff);
+                    this.motionZ = this.getSpeed() * 0.15 * (z / diff);
+                    this.motionY = this.getSpeed() * 0.27 * (y / diff);
+                }
+                this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
+                this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
+            }
+    
+            double dx = this.motionX * tickDiff;
+            double dy = this.motionY * tickDiff;
+            double dz = this.motionZ * tickDiff;
+            Vector3 target = this.target;
+            if (this.stayTime > 0) {
+                this.stayTime -= tickDiff;
+                this.move(0, dy, 0);
+            } else {
+                Vector2 be = new Vector2(this.x + dx, this.z + dz);
+                this.move(dx, dy, dz);
+                Vector2 af = new Vector2(this.x, this.z);
+    
+                if (be.x != af.x || be.y != af.y) {
+                    this.moveTime -= 90 * tickDiff;
+                }
+            }
             this.updateMovement();
-            return null;
+            return target;
         }
-
-        if (this.followTarget != null && !this.followTarget.closed && this.followTarget.isAlive()) {
-            double x = this.followTarget.x - this.x;
-            double y = this.followTarget.y - this.y;
-            double z = this.followTarget.z - this.z;
-
-            double diff = Math.abs(x) + Math.abs(z);
-            if (this.stayTime > 0 || this.distance(this.followTarget) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
-                this.motionX = 0;
-                this.motionZ = 0;
-            } else {
-                this.motionX = this.getSpeed() * 0.15 * (x / diff);
-                this.motionZ = this.getSpeed() * 0.15 * (z / diff);
-                this.motionY = this.getSpeed() * 0.27 * (y / diff);
-            }
-            this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
-            this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
-        }
-
-        Vector3 before = this.target;
-        this.checkTarget();
-        if (this.target instanceof EntityCreature || before != this.target) {
-            double x = this.target.x - this.x;
-            double y = this.target.y - this.y;
-            double z = this.target.z - this.z;
-
-            double diff = Math.abs(x) + Math.abs(z);
-            if (this.stayTime > 0 || this.distance(this.target) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
-                this.motionX = 0;
-                this.motionZ = 0;
-            } else {
-                this.motionX = this.getSpeed() * 0.15 * (x / diff);
-                this.motionZ = this.getSpeed() * 0.15 * (z / diff);
-                this.motionY = this.getSpeed() * 0.27 * (y / diff);
-            }
-            this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
-            this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
-        }
-
-        double dx = this.motionX * tickDiff;
-        double dy = this.motionY * tickDiff;
-        double dz = this.motionZ * tickDiff;
-        Vector3 target = this.target;
-        if (this.stayTime > 0) {
-            this.stayTime -= tickDiff;
-            this.move(0, dy, 0);
-        } else {
-            Vector2 be = new Vector2(this.x + dx, this.z + dz);
-            this.move(dx, dy, dz);
-            Vector2 af = new Vector2(this.x, this.z);
-
-            if (be.x != af.x || be.y != af.y) {
-                this.moveTime -= 90 * tickDiff;
-            }
-        }
-        this.updateMovement();
-        return target;
+        return null;
     }
 
 }

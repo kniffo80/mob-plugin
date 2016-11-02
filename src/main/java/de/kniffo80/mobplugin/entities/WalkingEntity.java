@@ -11,6 +11,7 @@ import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.animal.Animal;
 
@@ -116,83 +117,86 @@ public abstract class WalkingEntity extends BaseEntity {
     }
 
     public Vector3 updateMove(int tickDiff) {
-        if (!this.isMovement()) {
-            return null;
-        }
-
-        if (this.isKnockback()) {
-            this.move(this.motionX * tickDiff, this.motionY, this.motionZ * tickDiff);
-            this.motionY -= this.getGravity() * tickDiff;
-            this.updateMovement();
-            return null;
-        }
-
-        if (this.followTarget != null && !this.followTarget.closed && this.followTarget.isAlive()) {
-            double x = this.followTarget.x - this.x;
-            double y = this.followTarget.y - this.y;
-            double z = this.followTarget.z - this.z;
-
-            double diff = Math.abs(x) + Math.abs(z);
-            if (this.stayTime > 0 || this.distance(this.followTarget) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
-                this.motionX = 0;
-                this.motionZ = 0;
-            } else {
-                this.motionX = this.getSpeed() * 0.15 * (x / diff);
-                this.motionZ = this.getSpeed() * 0.15 * (z / diff);
+        if (MobPlugin.MOB_AI_ENABLED) {
+            if (!this.isMovement()) {
+                return null;
             }
-            this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
-            this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
-            return this.followTarget;
-        }
-
-        Vector3 before = this.target;
-        this.checkTarget();
-        if (this.target instanceof EntityCreature || before != this.target) {
-            double x = this.target.x - this.x;
-            double y = this.target.y - this.y;
-            double z = this.target.z - this.z;
-
-            double diff = Math.abs(x) + Math.abs(z);
-            if (this.stayTime > 0 || this.distance(this.target) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
-                this.motionX = 0;
-                this.motionZ = 0;
-            } else {
-                this.motionX = this.getSpeed() * 0.15 * (x / diff);
-                this.motionZ = this.getSpeed() * 0.15 * (z / diff);
-            }
-            this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
-            this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
-        }
-
-        double dx = this.motionX * tickDiff;
-        double dz = this.motionZ * tickDiff;
-        boolean isJump = this.checkJump(dx, dz);
-        if (this.stayTime > 0) {
-            this.stayTime -= tickDiff;
-            this.move(0, this.motionY * tickDiff, 0);
-        } else {
-            Vector2 be = new Vector2(this.x + dx, this.z + dz);
-            this.move(dx, this.motionY * tickDiff, dz);
-            Vector2 af = new Vector2(this.x, this.z);
-
-            if ((be.x != af.x || be.y != af.y) && !isJump) {
-                this.moveTime -= 90 * tickDiff;
-            }
-        }
-
-        if (!isJump) {
-            if (this.onGround) {
-                this.motionY = 0;
-            } else if (this.motionY > -this.getGravity() * 4) {
-                if (!(this.level.getBlock(new Vector3(NukkitMath.floorDouble(this.x), (int) (this.y + 0.8), NukkitMath.floorDouble(this.z))) instanceof BlockLiquid)) {
-                    this.motionY -= this.getGravity() * 1;
-                }
-            } else {
+    
+            if (this.isKnockback()) {
+                this.move(this.motionX * tickDiff, this.motionY, this.motionZ * tickDiff);
                 this.motionY -= this.getGravity() * tickDiff;
+                this.updateMovement();
+                return null;
             }
+    
+            if (this.followTarget != null && !this.followTarget.closed && this.followTarget.isAlive()) {
+                double x = this.followTarget.x - this.x;
+                double y = this.followTarget.y - this.y;
+                double z = this.followTarget.z - this.z;
+    
+                double diff = Math.abs(x) + Math.abs(z);
+                if (this.stayTime > 0 || this.distance(this.followTarget) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
+                    this.motionX = 0;
+                    this.motionZ = 0;
+                } else {
+                    this.motionX = this.getSpeed() * 0.15 * (x / diff);
+                    this.motionZ = this.getSpeed() * 0.15 * (z / diff);
+                }
+                this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
+                this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
+                return this.followTarget;
+            }
+    
+            Vector3 before = this.target;
+            this.checkTarget();
+            if (this.target instanceof EntityCreature || before != this.target) {
+                double x = this.target.x - this.x;
+                double y = this.target.y - this.y;
+                double z = this.target.z - this.z;
+    
+                double diff = Math.abs(x) + Math.abs(z);
+                if (this.stayTime > 0 || this.distance(this.target) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
+                    this.motionX = 0;
+                    this.motionZ = 0;
+                } else {
+                    this.motionX = this.getSpeed() * 0.15 * (x / diff);
+                    this.motionZ = this.getSpeed() * 0.15 * (z / diff);
+                }
+                this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
+                this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
+            }
+    
+            double dx = this.motionX * tickDiff;
+            double dz = this.motionZ * tickDiff;
+            boolean isJump = this.checkJump(dx, dz);
+            if (this.stayTime > 0) {
+                this.stayTime -= tickDiff;
+                this.move(0, this.motionY * tickDiff, 0);
+            } else {
+                Vector2 be = new Vector2(this.x + dx, this.z + dz);
+                this.move(dx, this.motionY * tickDiff, dz);
+                Vector2 af = new Vector2(this.x, this.z);
+    
+                if ((be.x != af.x || be.y != af.y) && !isJump) {
+                    this.moveTime -= 90 * tickDiff;
+                }
+            }
+    
+            if (!isJump) {
+                if (this.onGround) {
+                    this.motionY = 0;
+                } else if (this.motionY > -this.getGravity() * 4) {
+                    if (!(this.level.getBlock(new Vector3(NukkitMath.floorDouble(this.x), (int) (this.y + 0.8), NukkitMath.floorDouble(this.z))) instanceof BlockLiquid)) {
+                        this.motionY -= this.getGravity() * 1;
+                    }
+                } else {
+                    this.motionY -= this.getGravity() * tickDiff;
+                }
+            }
+            this.updateMovement();
+            return this.target;
         }
-        this.updateMovement();
-        return this.target;
+        return null;
     }
 
 }

@@ -10,12 +10,17 @@ website: https://github.com/kniffo80/NukkitMobPlugin
 commands: []
 
 commands:
-  pureentities:
+  spawn:
     description: Spawn a simple mob to the player, that is using this command
     aliases: ["mob"]
     usage: "/mob spawn <mob_name>"
-    permission: entitymanager.command
+    permission: mob-plugin.command
+  removemobs:
+    description: Remove all living mobs
+    aliases: ["removeall"]
+    usage: "/mob removeall"
+    permission: mob-plugin.command
 permissions:
-  entitymanager.command:
+  mob-plugin.command:
     description: ""
     default: op
