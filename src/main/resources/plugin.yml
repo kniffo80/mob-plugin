@@ -1,0 +1,21 @@
+name: MobPlugin
+main: de.kniffo80.mobplugin.MobPlugin
+version: "1.0"
+api: ["1.0.0"]
+
+load: STARTUP
+author: kniffo80
+description: Implement Entity AI from scratch beginning with 0.16.x
+website: https://github.com/kniffo80/NukkitMobPlugin
+commands: []
+
+commands:
+  pureentities:
+    description: Spawn a simple mob to the player, that is using this command
+    aliases: ["mob"]
+    usage: "/mob spawn <mob_name>"
+    permission: entitymanager.command
+permissions:
+  entitymanager.command:
+    description: ""
+    default: op

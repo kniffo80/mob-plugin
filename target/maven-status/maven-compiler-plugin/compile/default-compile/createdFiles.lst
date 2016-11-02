@@ -1,0 +1,15 @@
+de/kniffo80/mobplugin/entities/WalkingEntity.class
+de/kniffo80/mobplugin/entities/animal/Animal.class
+de/kniffo80/mobplugin/entities/animal/FlyingAnimal.class
+de/kniffo80/mobplugin/Utils.class
+de/kniffo80/mobplugin/entities/monster/WalkingMonster.class
+de/kniffo80/mobplugin/entities/FlyingEntity.class
+de/kniffo80/mobplugin/entities/monster/walking/Wolf.class
+de/kniffo80/mobplugin/entities/Tameable.class
+de/kniffo80/mobplugin/MobPlugin.class
+de/kniffo80/mobplugin/entities/animal/WalkingAnimal.class
+de/kniffo80/mobplugin/entities/BaseEntity.class
+de/kniffo80/mobplugin/entities/monster/FlyingMonster.class
+de/kniffo80/mobplugin/entities/monster/walking/Wolf$1.class
+de/kniffo80/mobplugin/entities/monster/TameableMonster.class
+de/kniffo80/mobplugin/entities/monster/Monster.class

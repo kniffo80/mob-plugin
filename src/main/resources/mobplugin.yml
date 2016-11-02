@@ -1,0 +1,3 @@
+# this is the configuration file for the plugin. this needs to be put in the plugin folder!
+entities:
+ mob-ai: false
