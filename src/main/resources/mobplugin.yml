@@ -6,5 +6,32 @@ entities:
  auto-spawn-tick: 300
 
 # configure max spawns of animals / mobs
-spawn-config:
- max-wolf: 1
+max-spawns:
+ bat: 0
+ blaze: 0
+ cave-spider: 0
+ chicken: 0
+ cow: 0
+ creeper: 0
+ donkey: 0
+ enderman: 0
+ ghast: 0
+ horse: 0
+ iron-golem: 0
+ mooshroom: 0
+ mule: 0
+ ocelot: 0
+ pig: 0
+ pig-zombie: 0
+ rabbit: 0
+ silverfish: 0
+ sheep: 0
+ skeleton: 0
+ skeleton-horse: 0
+ snow-golem: 0
+ spider: 0
+ wolf: 1
+ zombie: 0
+ zombie-horse: 0
+ zombie-villager: 0
+ 

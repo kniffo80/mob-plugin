@@ -22,8 +22,6 @@ public interface IEntitySpawner {
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level);
     
-    public boolean isEntitySpawnAllowed (Level level);
-    
     public int getEntityNetworkId ();
     
     public String getEntityName ();

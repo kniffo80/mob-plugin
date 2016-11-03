@@ -32,6 +32,7 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.entities.BaseEntity;
 import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
+import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>
@@ -148,6 +149,8 @@ public class MobPlugin extends PluginBase implements Listener {
 
     private void registerEntities() {
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
+        
+        Entity.registerEntity("FireBall", EntityFireBall.class);
         Utils.logServerInfo("registerEntites: done.");
     }
 

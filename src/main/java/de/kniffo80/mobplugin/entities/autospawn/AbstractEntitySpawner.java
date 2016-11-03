@@ -38,7 +38,6 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
     @Override
     public void spawn(List<Player> onlinePlayers, List<OfflinePlayer> offlinePlayers) {
         // first spawn everything for online players ...
-        
         if (isSpawnAllowedByDifficulty()) {
             SpawnResult lastSpawnResult = null;
             for (Player player : onlinePlayers) {
@@ -72,16 +71,20 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
 //        Position pos = offlinePlayer ? ((OfflinePlayer) iPlayer).getLastKnownPosition() : ((Player) iPlayer).getPosition();
         Position pos = ((Player)iPlayer).getPosition();
         Level level = ((Player)iPlayer).getLevel();
-
-        if (pos != null) {
-            // get a random safe position for spawn
-            pos.x += this.spawnTask.getRandomSafeXZCoord(50, 26, 6);
-            pos.z += this.spawnTask.getRandomSafeXZCoord(50, 26, 6);
-            pos.y = this.spawnTask.getSafeYCoord(level, pos, 3);
-        }
         
-        if (pos == null) {
-            return SpawnResult.POSITION_MISMATCH;
+        if (this.spawnTask.entitySpawnAllowed(level, getEntityNetworkId())) {
+            if (pos != null) {
+                // get a random safe position for spawn
+                pos.x += this.spawnTask.getRandomSafeXZCoord(50, 26, 6);
+                pos.z += this.spawnTask.getRandomSafeXZCoord(50, 26, 6);
+                pos.y = this.spawnTask.getSafeYCoord(level, pos, 3);
+            }
+            
+            if (pos == null) {
+                return SpawnResult.POSITION_MISMATCH;
+            }
+        } else {
+            return SpawnResult.MAX_SPAWN_REACHED;
         }
         
         return spawn(iPlayer, pos, level);
@@ -117,14 +120,6 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
      */
     protected Difficulty getCurrentDifficulty() {
         return Difficulty.getByDiffculty(this.server.getDifficulty());
-    }
-    
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#isEntitySpawnAllowed()
-     */
-    @Override
-    public boolean isEntitySpawnAllowed(Level level) {
-        return this.spawnTask.entitySpawnAllowed(level, getEntityNetworkId());
     }
     
 }

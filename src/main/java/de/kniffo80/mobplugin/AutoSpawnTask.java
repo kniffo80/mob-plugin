@@ -13,9 +13,47 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
+import de.kniffo80.mobplugin.entities.animal.flying.Bat;
+import de.kniffo80.mobplugin.entities.animal.walking.Chicken;
+import de.kniffo80.mobplugin.entities.animal.walking.Cow;
+import de.kniffo80.mobplugin.entities.animal.walking.Donkey;
+import de.kniffo80.mobplugin.entities.animal.walking.Horse;
+import de.kniffo80.mobplugin.entities.animal.walking.Mooshroom;
+import de.kniffo80.mobplugin.entities.animal.walking.Mule;
+import de.kniffo80.mobplugin.entities.animal.walking.Ocelot;
+import de.kniffo80.mobplugin.entities.animal.walking.Pig;
+import de.kniffo80.mobplugin.entities.animal.walking.Rabbit;
+import de.kniffo80.mobplugin.entities.animal.walking.Sheep;
+import de.kniffo80.mobplugin.entities.animal.walking.SkeletonHorse;
+import de.kniffo80.mobplugin.entities.animal.walking.ZombieHorse;
 import de.kniffo80.mobplugin.entities.autospawn.IEntitySpawner;
+import de.kniffo80.mobplugin.entities.monster.flying.Blaze;
+import de.kniffo80.mobplugin.entities.monster.flying.Ghast;
+import de.kniffo80.mobplugin.entities.monster.walking.CaveSpider;
+import de.kniffo80.mobplugin.entities.monster.walking.Creeper;
+import de.kniffo80.mobplugin.entities.monster.walking.Enderman;
+import de.kniffo80.mobplugin.entities.monster.walking.IronGolem;
+import de.kniffo80.mobplugin.entities.monster.walking.PigZombie;
+import de.kniffo80.mobplugin.entities.monster.walking.Silverfish;
+import de.kniffo80.mobplugin.entities.monster.walking.Skeleton;
+import de.kniffo80.mobplugin.entities.monster.walking.SnowGolem;
+import de.kniffo80.mobplugin.entities.monster.walking.Spider;
 import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
+import de.kniffo80.mobplugin.entities.monster.walking.Zombie;
+import de.kniffo80.mobplugin.entities.monster.walking.ZombieVillager;
+import de.kniffo80.mobplugin.entities.spawners.BatSpawner;
+import de.kniffo80.mobplugin.entities.spawners.ChickenSpawner;
+import de.kniffo80.mobplugin.entities.spawners.CowSpawner;
+import de.kniffo80.mobplugin.entities.spawners.CreeperSpawner;
+import de.kniffo80.mobplugin.entities.spawners.EndermanSpawner;
+import de.kniffo80.mobplugin.entities.spawners.OcelotSpawner;
+import de.kniffo80.mobplugin.entities.spawners.PigSpawner;
+import de.kniffo80.mobplugin.entities.spawners.RabbitSpawner;
+import de.kniffo80.mobplugin.entities.spawners.SheepSpawner;
+import de.kniffo80.mobplugin.entities.spawners.SkeletonSpawner;
+import de.kniffo80.mobplugin.entities.spawners.SpiderSpawner;
 import de.kniffo80.mobplugin.entities.spawners.WolfSpawner;
+import de.kniffo80.mobplugin.entities.spawners.ZombieSpawner;
 
 
 public class AutoSpawnTask implements Runnable {
@@ -67,12 +105,50 @@ public class AutoSpawnTask implements Runnable {
     }
 
     private void prepareSpawnerClasses() {
+        entitySpawners.add(new BatSpawner(this));
+        entitySpawners.add(new ChickenSpawner(this));
+        entitySpawners.add(new CowSpawner(this));
+        entitySpawners.add(new CreeperSpawner(this));
+        entitySpawners.add(new EndermanSpawner(this));
+        entitySpawners.add(new OcelotSpawner(this));
+        entitySpawners.add(new PigSpawner(this));
+        entitySpawners.add(new RabbitSpawner(this));
+        entitySpawners.add(new SheepSpawner(this));
+        entitySpawners.add(new SkeletonSpawner(this));
+        entitySpawners.add(new SpiderSpawner(this));
         entitySpawners.add(new WolfSpawner(this));
+        entitySpawners.add(new ZombieSpawner(this));
         FileLogger.debug(String.format("prepared %d spawner classes", this.entitySpawners.size()));
     }
 
     private void prepareMaxSpawns() {
-        maxSpawns.put(Wolf.NETWORK_ID, this.pluginConfig.getInt("spawn-config.max-wolf", 0));
+        maxSpawns.put(Bat.NETWORK_ID, this.pluginConfig.getInt("max-spawns.bat", 0));
+        maxSpawns.put(Blaze.NETWORK_ID, this.pluginConfig.getInt("max-spawns.blaze", 0));
+        maxSpawns.put(CaveSpider.NETWORK_ID, this.pluginConfig.getInt("max-spawns.cave-spider", 0));
+        maxSpawns.put(Chicken.NETWORK_ID, this.pluginConfig.getInt("max-spawns.chicken", 0));
+        maxSpawns.put(Cow.NETWORK_ID, this.pluginConfig.getInt("max-spawns.cow", 0));
+        maxSpawns.put(Creeper.NETWORK_ID, this.pluginConfig.getInt("max-spawns.creeper", 0));
+        maxSpawns.put(Donkey.NETWORK_ID, this.pluginConfig.getInt("max-spawns.donkey", 0));
+        maxSpawns.put(Enderman.NETWORK_ID, this.pluginConfig.getInt("max-spawns.enderman", 0));
+        maxSpawns.put(Ghast.NETWORK_ID, this.pluginConfig.getInt("max-spawns.ghast", 0));
+        maxSpawns.put(Horse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.horse", 0));
+        maxSpawns.put(IronGolem.NETWORK_ID, this.pluginConfig.getInt("max-spawns.iron-golem", 0));
+        maxSpawns.put(Mooshroom.NETWORK_ID, this.pluginConfig.getInt("max-spawns.mooshroom", 0));
+        maxSpawns.put(Mule.NETWORK_ID, this.pluginConfig.getInt("max-spawns.mule", 0));
+        maxSpawns.put(Ocelot.NETWORK_ID, this.pluginConfig.getInt("max-spawns.ocelot", 0));
+        maxSpawns.put(Pig.NETWORK_ID, this.pluginConfig.getInt("max-spawns.pig", 0));
+        maxSpawns.put(PigZombie.NETWORK_ID, this.pluginConfig.getInt("max-spawns.pig-zombie", 0));
+        maxSpawns.put(Rabbit.NETWORK_ID, this.pluginConfig.getInt("max-spawns.rabbit", 0));
+        maxSpawns.put(Silverfish.NETWORK_ID, this.pluginConfig.getInt("max-spawns.silverfish", 0));
+        maxSpawns.put(Sheep.NETWORK_ID, this.pluginConfig.getInt("max-spawns.sheep", 0));
+        maxSpawns.put(Skeleton.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton", 0));
+        maxSpawns.put(SkeletonHorse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton-horse", 0));
+        maxSpawns.put(SnowGolem.NETWORK_ID, this.pluginConfig.getInt("max-spawns.snow-golem", 0));
+        maxSpawns.put(Spider.NETWORK_ID, this.pluginConfig.getInt("max-spawns.spider", 0));
+        maxSpawns.put(Wolf.NETWORK_ID, this.pluginConfig.getInt("max-spawns.wolf", 0));
+        maxSpawns.put(Zombie.NETWORK_ID, this.pluginConfig.getInt("max-spawns.zombie", 0));
+        maxSpawns.put(ZombieHorse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.zombie-horse", 0));
+        maxSpawns.put(ZombieVillager.NETWORK_ID, this.pluginConfig.getInt("max-spawns.zombie-villager", 0));
     }
 
     public boolean entitySpawnAllowed(Level level, int networkId) {

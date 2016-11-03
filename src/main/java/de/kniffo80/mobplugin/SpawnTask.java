@@ -8,9 +8,6 @@ package de.kniffo80.mobplugin;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -22,8 +19,6 @@ import cn.nukkit.level.Position;
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (mige)</a>
  */
 public class SpawnTask implements Runnable {
-
-    private static final Logger LOG              = LogManager.getLogger(SpawnTask.class);
 
     private Server              server           = null;
 
