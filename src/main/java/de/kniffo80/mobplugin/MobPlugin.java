@@ -6,7 +6,11 @@
 package de.kniffo80.mobplugin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import cn.nukkit.IPlayer;
+import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
@@ -30,11 +34,13 @@ import de.kniffo80.mobplugin.entities.BaseEntity;
 import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
 
 /**
- * @author <a href="mailto:mige@whatevermobile.com">Michael Gertz (mige)</a>
+ * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>
  */
 public class MobPlugin extends PluginBase implements Listener {
 
     public static boolean MOB_AI_ENABLED = false;
+
+    private Config        pluginConfig   = null;
 
     @Override
     public void onLoad() {
@@ -45,15 +51,20 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public void onEnable() {
         // Config reading and writing
-        Config config = new Config(new File(this.getDataFolder(), "mobplugin.yml"));
+        pluginConfig = new Config(new File(this.getDataFolder(), "mobplugin.yml"));
 
         // we need this flag as it's controlled by the plugin's entities
-        MOB_AI_ENABLED = config.getBoolean("entities.mob-ai", false);
+        MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", false);
+        int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 0);
 
         // register as listener to plugin events
         this.getServer().getPluginManager().registerEvents(this, this);
+        
+        if (spawnDelay > 0) {
+            this.getServer().getScheduler().scheduleRepeatingTask(new AutoSpawnTask(this), spawnDelay, true);
+        }
 
-        Utils.logServerInfo(String.format("Plugin enabling successful [aiEnabled:%s]", MOB_AI_ENABLED));
+        Utils.logServerInfo(String.format("Plugin enabling successful [aiEnabled:%s] [autoSpawnTick:%d]", MOB_AI_ENABLED, spawnDelay));
     }
 
     @Override
@@ -127,6 +138,14 @@ public class MobPlugin extends PluginBase implements Listener {
         return true;
     }
 
+    /**
+     * Returns plugin specific yml configuration
+     * @return  a {@link Config} instance
+     */
+    public Config getPluginConfig() {
+        return this.pluginConfig;
+    }
+
     private void registerEntities() {
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Utils.logServerInfo("registerEntites: done.");
@@ -153,6 +172,47 @@ public class MobPlugin extends PluginBase implements Listener {
                         .add(new FloatTag("", source instanceof Location ? (float) ((Location) source).pitch : 0)));
 
         return Entity.createEntity(type.toString(), chunk, nbt, args);
+    }
+    
+    /**
+     * Returns all registered players to the current server
+     * @return  a {@link List} containing a number of {@link IPlayer} elements, which can be {@link Player} or {@link OfflinePlayer}
+     */
+    public List<IPlayer> getAllRegisteredPlayers () {
+        List<IPlayer> playerList = new ArrayList<>();
+        for (Player player : this.getServer().getOnlinePlayers().values()) {
+            playerList.add(player);
+        }
+        // now get all stores offline players ...
+        File playerDirectory = new File(this.getServer().getDataPath() + "players");
+        File entry;
+        String[] storedFiles = playerDirectory.list();
+        if (storedFiles != null && storedFiles.length > 0) {
+            for (String file : storedFiles) {
+                entry = new File(file);
+                String filename = entry.getName();
+                filename = filename.substring(0, filename.indexOf(".dat"));
+                if (!isPlayerAlreadyInList(filename, playerList)) {
+                    playerList.add(new OfflinePlayer(this.getServer(), filename));
+                }
+            }
+        }
+        return playerList;
+    }
+    
+    /**
+     * checks if a given player name's player instance is already in the given list
+     * @param name          the name of the player to be checked   
+     * @param playerList    the existing entries
+     * @return <code>true</code> if the player is already in the list
+     */
+    private boolean isPlayerAlreadyInList (String name, List<IPlayer> playerList) {
+        for (IPlayer player : playerList) {
+            if (player.getName().toLowerCase().equals(name.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // --- event listeners ---

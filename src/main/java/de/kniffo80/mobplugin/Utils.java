@@ -11,7 +11,7 @@ import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
 
 /**
- * @author <a href="mailto:mige@whatevermobile.com">Michael Gertz (mige)</a>
+ * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>
  *
  */
 public class Utils {
