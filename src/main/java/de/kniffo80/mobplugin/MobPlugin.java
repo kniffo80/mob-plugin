@@ -20,6 +20,9 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDeathEvent;
+import cn.nukkit.item.Item;
+import cn.nukkit.item.food.Food;
+import cn.nukkit.item.food.FoodNormal;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
@@ -33,6 +36,9 @@ import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.entities.BaseEntity;
 import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
+import de.kniffo80.mobplugin.items.ItemMuttonCooked;
+import de.kniffo80.mobplugin.items.ItemMuttonRaw;
+import de.kniffo80.mobplugin.items.MobPluginItems;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>
@@ -46,6 +52,7 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public void onLoad() {
         registerEntities();
+        registerItems();
         Utils.logServerInfo("Plugin loaded successfully.");
     }
 
@@ -154,7 +161,23 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         
         Entity.registerEntity("FireBall", EntityFireBall.class);
+        
         Utils.logServerInfo("registerEntites: done.");
+    }
+    
+    private void registerItems () {
+        // register the new items
+        Item.addCreativeItem(new ItemMuttonCooked());
+        Item.addCreativeItem(new ItemMuttonRaw());
+        
+        // register the items as food 
+        Food.registerFood(new FoodNormal(6, 9.6F).addRelative(MobPluginItems.COOKED_MUTTON), this);
+        Food.registerFood(new FoodNormal(2, 1.2F).addRelative(MobPluginItems.RAW_MUTTON), this);
+        
+        Item.list[MobPluginItems.COOKED_MUTTON] = ItemMuttonCooked.class;
+        Item.list[MobPluginItems.RAW_MUTTON] = ItemMuttonRaw.class;
+        
+        Utils.logServerInfo("registerItems: done.");
     }
 
     /**
