@@ -70,8 +70,7 @@ public class Mule extends WalkingAnimal {
      */
     @Override
     public int getKillExperience() {
-        // TODO Auto-generated method stub
-        return 0;
+        return Utils.rand(1, 4);
     }
 
 }

@@ -51,7 +51,6 @@ public class Bat extends FlyingAnimal {
      */
     @Override
     public int getKillExperience() {
-        // TODO Auto-generated method stub
         return 0;
     }
 

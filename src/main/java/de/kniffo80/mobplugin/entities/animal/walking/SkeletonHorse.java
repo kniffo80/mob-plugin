@@ -11,6 +11,7 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.animal.WalkingAnimal;
 
 /**
@@ -69,8 +70,7 @@ public class SkeletonHorse extends WalkingAnimal {
      */
     @Override
     public int getKillExperience() {
-        // TODO Auto-generated method stub
-        return 0;
+        return Utils.rand(1, 4);
     }
 
 }
