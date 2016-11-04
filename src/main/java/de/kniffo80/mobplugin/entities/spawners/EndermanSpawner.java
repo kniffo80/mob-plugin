@@ -5,14 +5,12 @@
  */
 package de.kniffo80.mobplugin.entities.spawners;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import cn.nukkit.IPlayer;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import de.kniffo80.mobplugin.AutoSpawnTask;
+import de.kniffo80.mobplugin.FileLogger;
 import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import de.kniffo80.mobplugin.entities.autospawn.SpawnResult;
@@ -24,8 +22,6 @@ import de.kniffo80.mobplugin.entities.monster.walking.Enderman;
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
 public class EndermanSpawner extends AbstractEntitySpawner {
-
-    private static final Logger AI_LOG = LogManager.getLogger(EndermanSpawner.class);
 
     /**
      * @param spawnTask
@@ -55,7 +51,7 @@ public class EndermanSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 3.8, 0));
         }
 
-        AI_LOG.info("Spawn for {} at {},{},{} with lightlevel {} and blockId {}, result: {}", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result);
+        FileLogger.info(String.format("Spawn for %s at %d,%d,%d with lightlevel %d and blockId %d, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
 
         return result;
     }

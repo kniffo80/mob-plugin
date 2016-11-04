@@ -13,7 +13,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- versions -->
-		<dep.log4j.version>2.6.2</dep.log4j.version>
 		<dep.nukkit.version>1.0-SNAPSHOT</dep.nukkit.version>
 	</properties>
 
@@ -23,17 +22,6 @@
 			<artifactId>nukkit</artifactId>
 			<version>${dep.nukkit.version}</version>
 			<scope>provided</scope>
-		</dependency>
-		<!-- advanced logging (log4j2) -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>${dep.log4j.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-core</artifactId>
-		    <version>${dep.log4j.version}</version>
 		</dependency>
 	</dependencies>
 

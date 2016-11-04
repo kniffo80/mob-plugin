@@ -22,6 +22,7 @@ public class FileLogger {
     private static PrintWriter printWriter = null;
     
     static {
+        // we create a new file each time the server starts ...
         try {
             printWriter = new PrintWriter(Server.getInstance().getDataPath() + "mobplugin.log", "UTF-8");
         } catch (FileNotFoundException | UnsupportedEncodingException e) {

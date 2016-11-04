@@ -98,10 +98,15 @@ public class AutoSpawnTask implements Runnable {
             }
         }
         
-        FileLogger.debug(String.format("Found %d online and %d offline players", onlinePlayers.size(), offlinePlayers.size()));
-        for (IEntitySpawner spawner : entitySpawners) {
-            spawner.spawn(onlinePlayers, offlinePlayers);
+        if (onlinePlayers.size() > 0 || offlinePlayers.size() > 0) {
+            FileLogger.debug(String.format("Found %d online and %d offline players", onlinePlayers.size(), offlinePlayers.size()));
+            for (IEntitySpawner spawner : entitySpawners) {
+                spawner.spawn(onlinePlayers, offlinePlayers);
+            }
+        } else {
+            FileLogger.debug("No player online or offline found. Skipping auto spawn.");
         }
+        
     }
 
     private void prepareSpawnerClasses() {
@@ -149,6 +154,15 @@ public class AutoSpawnTask implements Runnable {
         maxSpawns.put(Zombie.NETWORK_ID, this.pluginConfig.getInt("max-spawns.zombie", 0));
         maxSpawns.put(ZombieHorse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.zombie-horse", 0));
         maxSpawns.put(ZombieVillager.NETWORK_ID, this.pluginConfig.getInt("max-spawns.zombie-villager", 0));
+        
+        FileLogger.debug(String.format("max-spawns prepared [bat:%d] [blaze:%d] [caveSpider:%d] [chicken:%d] [cow:%d] [creeper:%d] [donkey:%d] [enderman:%d] [ghast:%d] [horse:%d] [ironGolem:%d] "
+                + "[mooshroom:%d] [mule:%d] [ocelot:%d] [pig:%d] [pigZombie:%d] [rabbit:%d] [silverfish:%d] [sheep:%d] [skeleton:%d] [skeletonHorse:%d] [snowGolem:%d] [spider:%d] [wolf:%d] [zombie:%d] "
+                + "[zombieHorse:%d] [zombieVillager:%d]", maxSpawns.get(Bat.NETWORK_ID), maxSpawns.get(Blaze.NETWORK_ID), maxSpawns.get(CaveSpider.NETWORK_ID), maxSpawns.get(Chicken.NETWORK_ID), 
+                maxSpawns.get(Cow.NETWORK_ID), maxSpawns.get(Creeper.NETWORK_ID), maxSpawns.get(Donkey.NETWORK_ID), maxSpawns.get(Enderman.NETWORK_ID), maxSpawns.get(Ghast.NETWORK_ID), 
+                maxSpawns.get(Horse.NETWORK_ID), maxSpawns.get(IronGolem.NETWORK_ID), maxSpawns.get(Mooshroom.NETWORK_ID), maxSpawns.get(Mule.NETWORK_ID), maxSpawns.get(Ocelot.NETWORK_ID), 
+                maxSpawns.get(Pig.NETWORK_ID), maxSpawns.get(PigZombie.NETWORK_ID), maxSpawns.get(Rabbit.NETWORK_ID), maxSpawns.get(Silverfish.NETWORK_ID), maxSpawns.get(Sheep.NETWORK_ID), 
+                maxSpawns.get(Skeleton.NETWORK_ID), maxSpawns.get(SkeletonHorse.NETWORK_ID), maxSpawns.get(SnowGolem.NETWORK_ID), maxSpawns.get(Spider.NETWORK_ID), maxSpawns.get(Wolf.NETWORK_ID), 
+                maxSpawns.get(Zombie.NETWORK_ID), maxSpawns.get(ZombieHorse.NETWORK_ID), maxSpawns.get(ZombieVillager.NETWORK_ID)));
     }
 
     public boolean entitySpawnAllowed(Level level, int networkId) {

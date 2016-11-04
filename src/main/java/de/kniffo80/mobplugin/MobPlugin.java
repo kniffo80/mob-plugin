@@ -52,7 +52,10 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public void onEnable() {
         // Config reading and writing
-        pluginConfig = new Config(new File(this.getDataFolder(), "mobplugin.yml"));
+        
+        System.out.println("datafolder: " + this.getDataFolder());
+        
+        pluginConfig = new Config(new File(this.getDataFolder(), "config.yml"));
 
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", false);
