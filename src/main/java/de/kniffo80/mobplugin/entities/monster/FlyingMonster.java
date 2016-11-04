@@ -169,21 +169,19 @@ public abstract class FlyingMonster extends FlyingEntity implements Monster {
         boolean hasUpdate = false;
         // Timings.timerEntityBaseTick.startTiming();
 
-        if (MobPlugin.MOB_AI_ENABLED) {
-            hasUpdate = super.entityBaseTick(tickDiff);
-    
-            this.attackDelay += tickDiff;
-            if (!this.hasEffect(Effect.WATER_BREATHING) && this.isInsideOfWater()) {
-                hasUpdate = true;
-                int airTicks = this.getDataPropertyInt(DATA_AIR) - tickDiff;
-                if (airTicks <= -20) {
-                    airTicks = 0;
-                    this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_DROWNING, 2));
-                }
-                this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
-            } else {
-                this.setDataProperty(new ShortEntityData(DATA_AIR, 300));
+        hasUpdate = super.entityBaseTick(tickDiff);
+
+        this.attackDelay += tickDiff;
+        if (!this.hasEffect(Effect.WATER_BREATHING) && this.isInsideOfWater()) {
+            hasUpdate = true;
+            int airTicks = this.getDataPropertyInt(DATA_AIR) - tickDiff;
+            if (airTicks <= -20) {
+                airTicks = 0;
+                this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_DROWNING, 2));
             }
+            this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
+        } else {
+            this.setDataProperty(new ShortEntityData(DATA_AIR, 300));
         }
 
         // Timings.timerEntityBaseTick.stopTiming();
