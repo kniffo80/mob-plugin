@@ -12,14 +12,20 @@ import java.util.List;
 import cn.nukkit.IPlayer;
 import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
+import cn.nukkit.block.Block;
+import cn.nukkit.block.BlockAir;
+import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.item.EntityItem;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
+import cn.nukkit.event.block.BlockBreakEvent;
+import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDeathEvent;
+import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.food.Food;
 import cn.nukkit.item.food.FoodNormal;
@@ -27,6 +33,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
@@ -34,8 +41,36 @@ import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.entities.BaseEntity;
+import de.kniffo80.mobplugin.entities.animal.flying.Bat;
+import de.kniffo80.mobplugin.entities.animal.walking.Chicken;
+import de.kniffo80.mobplugin.entities.animal.walking.Cow;
+import de.kniffo80.mobplugin.entities.animal.walking.Donkey;
+import de.kniffo80.mobplugin.entities.animal.walking.Horse;
+import de.kniffo80.mobplugin.entities.animal.walking.Mooshroom;
+import de.kniffo80.mobplugin.entities.animal.walking.Mule;
+import de.kniffo80.mobplugin.entities.animal.walking.Ocelot;
+import de.kniffo80.mobplugin.entities.animal.walking.Pig;
+import de.kniffo80.mobplugin.entities.animal.walking.Rabbit;
+import de.kniffo80.mobplugin.entities.animal.walking.Sheep;
+import de.kniffo80.mobplugin.entities.animal.walking.SkeletonHorse;
+import de.kniffo80.mobplugin.entities.animal.walking.ZombieHorse;
+import de.kniffo80.mobplugin.entities.block.BlockEntitySpawner;
+import de.kniffo80.mobplugin.entities.monster.flying.Blaze;
+import de.kniffo80.mobplugin.entities.monster.flying.Ghast;
+import de.kniffo80.mobplugin.entities.monster.walking.CaveSpider;
+import de.kniffo80.mobplugin.entities.monster.walking.Creeper;
+import de.kniffo80.mobplugin.entities.monster.walking.Enderman;
+import de.kniffo80.mobplugin.entities.monster.walking.IronGolem;
+import de.kniffo80.mobplugin.entities.monster.walking.PigZombie;
+import de.kniffo80.mobplugin.entities.monster.walking.Silverfish;
+import de.kniffo80.mobplugin.entities.monster.walking.Skeleton;
+import de.kniffo80.mobplugin.entities.monster.walking.SnowGolem;
+import de.kniffo80.mobplugin.entities.monster.walking.Spider;
 import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
+import de.kniffo80.mobplugin.entities.monster.walking.Zombie;
+import de.kniffo80.mobplugin.entities.monster.walking.ZombieVillager;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
+import de.kniffo80.mobplugin.items.ItemEnderPearl;
 import de.kniffo80.mobplugin.items.ItemMuttonCooked;
 import de.kniffo80.mobplugin.items.ItemMuttonRaw;
 import de.kniffo80.mobplugin.items.MobPluginItems;
@@ -158,10 +193,41 @@ public class MobPlugin extends PluginBase implements Listener {
     }
 
     private void registerEntities() {
-        Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
+        // register living entities
+        Entity.registerEntity(Bat.class.getSimpleName(), Bat.class);
+        Entity.registerEntity(Chicken.class.getSimpleName(), Chicken.class);
+        Entity.registerEntity(Cow.class.getSimpleName(), Cow.class);
+        Entity.registerEntity(Donkey.class.getSimpleName(), Donkey.class);
+        Entity.registerEntity(Horse.class.getSimpleName(), Horse.class);
+        Entity.registerEntity(Mooshroom.class.getSimpleName(), Mooshroom.class);
+        Entity.registerEntity(Mule.class.getSimpleName(), Mule.class);
+        Entity.registerEntity(Ocelot.class.getSimpleName(), Ocelot.class);
+        Entity.registerEntity(Pig.class.getSimpleName(), Pig.class);
+        Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
+        Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
+        Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
+        Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
         
+        Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
+        Entity.registerEntity(Ghast.class.getSimpleName(), Ghast.class);
+        Entity.registerEntity(CaveSpider.class.getSimpleName(), CaveSpider.class);
+        Entity.registerEntity(Creeper.class.getSimpleName(), Creeper.class);
+        Entity.registerEntity(Enderman.class.getSimpleName(), Enderman.class);
+        Entity.registerEntity(IronGolem.class.getSimpleName(), IronGolem.class);
+        Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);
+        Entity.registerEntity(Silverfish.class.getSimpleName(), Silverfish.class);
+        Entity.registerEntity(Skeleton.class.getSimpleName(), Skeleton.class);
+        Entity.registerEntity(SnowGolem.class.getSimpleName(), SnowGolem.class);
+        Entity.registerEntity(Spider.class.getSimpleName(), Spider.class);
+        Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
+        Entity.registerEntity(Zombie.class.getSimpleName(), Zombie.class);
+        Entity.registerEntity(ZombieVillager.class.getSimpleName(), ZombieVillager.class);
+        
+        // register the fireball entity 
         Entity.registerEntity("FireBall", EntityFireBall.class);
         
+        // register the mob spawner (which is probably not needed anymore)
+        BlockEntity.registerBlockEntity("MobSpawner", BlockEntitySpawner.class);
         Utils.logServerInfo("registerEntites: done.");
     }
     
@@ -169,6 +235,7 @@ public class MobPlugin extends PluginBase implements Listener {
         // register the new items
         Item.addCreativeItem(new ItemMuttonCooked());
         Item.addCreativeItem(new ItemMuttonRaw());
+        Item.addCreativeItem(new ItemEnderPearl());
         
         // register the items as food 
         Food.registerFood(new FoodNormal(6, 9.6F).addRelative(MobPluginItems.COOKED_MUTTON), this);
@@ -176,6 +243,7 @@ public class MobPlugin extends PluginBase implements Listener {
         
         Item.list[MobPluginItems.COOKED_MUTTON] = ItemMuttonCooked.class;
         Item.list[MobPluginItems.RAW_MUTTON] = ItemMuttonRaw.class;
+        Item.list[MobPluginItems.ENDER_PEARL] = ItemEnderPearl.class;
         
         Utils.logServerInfo("registerItems: done.");
     }
@@ -270,6 +338,90 @@ public class MobPlugin extends PluginBase implements Listener {
                     }
                 }
             }
+        }
+    }
+    
+    @EventHandler
+    public void PlayerInteractEvent(PlayerInteractEvent ev) {
+        if (ev.getFace() == 255 || ev.getAction() != PlayerInteractEvent.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
+        Item item = ev.getItem();
+        Block block = ev.getBlock();
+        if (item.getId() == Item.SPAWN_EGG && block.getId() == Item.MONSTER_SPAWNER) {
+            ev.setCancelled(true);
+
+            BlockEntity blockEntity = block.getLevel().getBlockEntity(block);
+            if (blockEntity != null && blockEntity instanceof BlockEntitySpawner) {
+                ((BlockEntitySpawner) blockEntity).setSpawnEntityType(item.getDamage());
+            } else {
+                if (blockEntity != null) {
+                    blockEntity.close();
+                }
+                CompoundTag nbt = new CompoundTag().putString("id", BlockEntity.MOB_SPAWNER).putInt("EntityId", item.getDamage()).putInt("x", (int) block.x).putInt("y", (int) block.y).putInt("z",
+                        (int) block.z);
+
+                new BlockEntitySpawner(block.getLevel().getChunk((int) block.x >> 4, (int) block.z >> 4), nbt);
+            }
+        }
+    }
+
+    @EventHandler
+    public void BlockPlaceEvent(BlockPlaceEvent ev) {
+        if (ev.isCancelled()) {
+            return;
+        }
+
+        Block block = ev.getBlock();
+        if (block.getId() == Item.JACK_O_LANTERN || block.getId() == Item.PUMPKIN) {
+            if (block.getSide(Vector3.SIDE_DOWN).getId() == Item.SNOW_BLOCK && block.getSide(Vector3.SIDE_DOWN, 2).getId() == Item.SNOW_BLOCK) {
+                Entity entity = create("SnowGolem", block.add(0.5, -2, 0.5));
+                if (entity != null) {
+                    entity.spawnToAll();
+                }
+
+                ev.setCancelled();
+                block.getLevel().setBlock(block.add(0, -1, 0), new BlockAir());
+                block.getLevel().setBlock(block.add(0, -2, 0), new BlockAir());
+            } else if (block.getSide(Vector3.SIDE_DOWN).getId() == Item.IRON_BLOCK && block.getSide(Vector3.SIDE_DOWN, 2).getId() == Item.IRON_BLOCK) {
+                block = block.getSide(Vector3.SIDE_DOWN);
+
+                Block first, second = null;
+                if ((first = block.getSide(Vector3.SIDE_EAST)).getId() == Item.IRON_BLOCK && (second = block.getSide(Vector3.SIDE_WEST)).getId() == Item.IRON_BLOCK) {
+                    block.getLevel().setBlock(first, new BlockAir());
+                    block.getLevel().setBlock(second, new BlockAir());
+                } else if ((first = block.getSide(Vector3.SIDE_NORTH)).getId() == Item.IRON_BLOCK && (second = block.getSide(Vector3.SIDE_SOUTH)).getId() == Item.IRON_BLOCK) {
+                    block.getLevel().setBlock(first, new BlockAir());
+                    block.getLevel().setBlock(second, new BlockAir());
+                }
+
+                if (second != null) {
+                    Entity entity = MobPlugin.create("IronGolem", block.add(0.5, -1, 0.5));
+                    if (entity != null) {
+                        entity.spawnToAll();
+                    }
+                    block.getLevel().setBlock(block, new BlockAir());
+                    block.getLevel().setBlock(block.add(0, -1, 0), new BlockAir());
+                    ev.setCancelled();
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void BlockBreakEvent(BlockBreakEvent ev) {
+        if (ev.isCancelled()) {
+            return;
+        }
+
+        Block block = ev.getBlock();
+        if ((block.getId() == Block.STONE || block.getId() == Block.STONE_BRICK || block.getId() == Block.STONE_WALL || block.getId() == Block.STONE_BRICK_STAIRS)
+            && block.getLevel().getBlockLightAt((int) block.x, (int) block.y, (int) block.z) < 12 && Utils.rand(1, 5) == 1) {
+            // TODO: 돌만 붓시면 되긋나
+            /*
+             * Silverfish entity = (Silverfish) create("Silverfish", block.add(0.5, 0, 0.5)); if(entity != null){ entity.spawnToAll(); }
+             */
         }
     }
 
