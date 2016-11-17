@@ -9,8 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.rmi.CORBA.Util;
-
 import cn.nukkit.IPlayer;
 import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
@@ -28,10 +26,8 @@ import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDeathEvent;
-import cn.nukkit.event.entity.EntityInteractEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerMouseOverEntityEvent;
-import cn.nukkit.event.player.PlayerMouseRightEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.food.Food;
 import cn.nukkit.item.food.FoodNormal;
@@ -45,11 +41,9 @@ import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.network.protocol.EntityEventPacket;
-import cn.nukkit.network.protocol.InteractPacket;
-import cn.nukkit.network.protocol.MobEffectPacket;
-import cn.nukkit.network.protocol.PlayerInputPacket;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.DyeColor;
 import de.kniffo80.mobplugin.entities.BaseEntity;
 import de.kniffo80.mobplugin.entities.animal.flying.Bat;
 import de.kniffo80.mobplugin.entities.animal.swimming.Squid;
@@ -82,6 +76,7 @@ import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
 import de.kniffo80.mobplugin.entities.monster.walking.Zombie;
 import de.kniffo80.mobplugin.entities.monster.walking.ZombieVillager;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 import de.kniffo80.mobplugin.items.ItemEnderPearl;
 import de.kniffo80.mobplugin.items.ItemInkSac;
 import de.kniffo80.mobplugin.items.ItemMuttonCooked;
@@ -450,13 +445,21 @@ public class MobPlugin extends PluginBase implements Listener {
             counter = 0;
             FileLogger.debug(String.format("Received PlayerMouseOverEntityEvent [entity:%s]", ev.getEntity()));
             // wolves can be tamed using bones
-            if (ev.getEntity().getNetworkId() == Wolf.NETWORK_ID && ev.getPlayer().getInventory().getItemInHand().getId() == Item.BONE) {
-                // now try it out ...
-                EntityEventPacket packet = new EntityEventPacket();
-                packet.eid = ev.getEntity().getId();
-                packet.event = EntityEventPacket.TAME_SUCCESS;
-                Server.broadcastPacket(new Player[] { ev.getPlayer() }, packet);
-                FileLogger.debug(String.format("Released packet [entity:%s]", ev.getEntity()));
+            if (ev != null && ev.getEntity() != null && ev.getPlayer() != null && ev.getEntity().getNetworkId() == Wolf.NETWORK_ID && ev.getPlayer().getInventory().getItemInHand().getId() == Item.BONE) {
+                // check if already owned and tamed ...
+                Wolf wolf = (Wolf)ev.getEntity();
+                if (!wolf.isAngry() && wolf.getOwner() == null) {
+                    // now try it out ...
+                    EntityEventPacket packet = new EntityEventPacket();
+                    packet.eid = ev.getEntity().getId();
+                    packet.event = EntityEventPacket.TAME_SUCCESS;
+                    Server.broadcastPacket(new Player[] { ev.getPlayer() }, packet);
+                    
+                    // set the owner
+                    wolf.setOwner(ev.getPlayer());
+                    wolf.setCollarColor(DyeColor.BLUE);
+                    wolf.saveNBT();
+                }
             }
         } else {
             counter++;

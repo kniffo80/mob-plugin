@@ -20,10 +20,6 @@ public interface Tameable {
 
     public static final String NAMED_TAG_SITTING    = "Sitting";
 
-    public static final int    DATA_TAMED_FLAG      = 16;
-
-    public static final int    DATA_UUID            = 17;
-
     Player getOwner();
 
     void setOwner(Player player);

@@ -11,7 +11,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ShortTag;
 import de.kniffo80.mobplugin.MobPlugin;
-import de.kniffo80.mobplugin.Utils;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public class BlockEntitySpawner extends BlockEntitySpawnable{
 

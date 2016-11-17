@@ -14,8 +14,8 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.timings.Timings;
-import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public class Zombie extends WalkingMonster implements EntityAgeable {
 

@@ -8,7 +8,7 @@ package de.kniffo80.mobplugin.entities.monster;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.entity.Entity;
-import cn.nukkit.entity.data.ByteEntityData;
+import cn.nukkit.entity.data.LongEntityData;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.Tameable;
@@ -68,8 +68,8 @@ public abstract class TameableMonster extends WalkingMonster implements Tameable
      */
     public void setOwner(Player player) {
         this.owner = player;
-//        setDataProperty(new StringEntityData(DATA_UUID, player.getUniqueId().toString()));
-        setTamedDataProperty(true);
+        setDataProperty(new LongEntityData(DATA_OWNER_EID, player.getId()));
+        setTamed(true);
     }
 
     @Override
@@ -87,24 +87,28 @@ public abstract class TameableMonster extends WalkingMonster implements Tameable
     }
     
     
-    private void setTamedDataProperty (boolean tamed) {
-        int var = getDataPropertyByte(DATA_TAMED_FLAG);
-
-        if (tamed) {
-            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, Byte.valueOf((byte) (var | 4))));
-        } else {
-            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, Byte.valueOf((byte) (var & -5))));
-        }
+    private void setTamed (boolean tamed) {
+        this.setDataFlag(DATA_FLAGS, DATA_FLAG_TAMED, tamed);
+        // following code isn't working
+//        int var = getDataPropertyByte(DATA_TAMED_FLAG);
+//
+//        if (tamed) {
+//            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, Byte.valueOf((byte) (var | 4))));
+//        } else {
+//            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, Byte.valueOf((byte) (var & -5))));
+//        }
     }
     
     private void setSittingDataProperty(boolean sit) {
-        int var = getDataPropertyByte(DATA_TAMED_FLAG);
-
-        if (sit) {
-            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, (byte) (var | 1)));
-        } else {
-            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, (byte) (var & -2)));
-        }
+        this.setDataFlag(DATA_FLAGS, DATA_FLAG_SITTING, sit);
+        // following code isn't working
+//        int var = getDataPropertyByte(DATA_TAMED_FLAG);
+//
+//        if (sit) {
+//            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, (byte) (var | 1)));
+//        } else {
+//            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, (byte) (var & -2)));
+//        }
     }
-
+    
 }

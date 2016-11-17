@@ -20,11 +20,11 @@ import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.MobPlugin;
-import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.BaseEntity;
 import de.kniffo80.mobplugin.entities.animal.Animal;
 import de.kniffo80.mobplugin.entities.monster.FlyingMonster;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public class Blaze extends FlyingMonster {
 

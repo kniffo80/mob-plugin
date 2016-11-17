@@ -5,19 +5,27 @@ import java.util.HashMap;
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.entity.data.IntEntityData;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.utils.DyeColor;
 import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.monster.TameableMonster;
 
 public class Wolf extends TameableMonster {
 
-    public static final int NETWORK_ID = 14;
+    public static final int     NETWORK_ID           = 14;
 
-    private int             angry      = 0;
+    private static final String NBT_KEY_ANGRY        = "Angry";
+
+    private static final String NBT_KEY_COLLAR_COLOR = "CollarColor";
+
+    private int                 angry                = 0;
+
+    private DyeColor            collarColor          = DyeColor.RED; // red is default
 
     public Wolf(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -47,19 +55,24 @@ public class Wolf extends TameableMonster {
     protected void initEntity() {
         super.initEntity();
 
-        if (this.namedTag.contains("Angry")) {
-            this.angry = this.namedTag.getInt("Angry");
+        if (this.namedTag.contains(NBT_KEY_ANGRY)) {
+            this.angry = this.namedTag.getInt(NBT_KEY_ANGRY);
+        }
+
+        if (this.namedTag.contains(NBT_KEY_COLLAR_COLOR)) {
+            this.collarColor = DyeColor.getByDyeData(this.namedTag.getInt(NBT_KEY_COLLAR_COLOR));
         }
 
         this.setMaxHealth(8);
         this.fireProof = true;
-        this.setDamage(new int[] { 0, 3, 4, 6 });
+        // this.setDamage(new int[] { 0, 3, 4, 6 });
     }
 
     @Override
     public void saveNBT() {
         super.saveNBT();
-        this.namedTag.putInt("Angry", this.angry);
+        this.namedTag.putInt(NBT_KEY_ANGRY, this.angry);
+        this.namedTag.putInt(NBT_KEY_COLLAR_COLOR, this.collarColor.getDyeData());
     }
 
     @Override
@@ -71,8 +84,8 @@ public class Wolf extends TameableMonster {
         return this.angry > 0;
     }
 
-    public void setAngry(int val) {
-        this.angry = val;
+    public void setAngry(boolean angry) {
+        this.angry = angry ? 1 : 0;
     }
 
     @Override
@@ -80,7 +93,7 @@ public class Wolf extends TameableMonster {
         super.attack(ev);
 
         if (!ev.isCancelled()) {
-            this.setAngry(1000);
+            this.setAngry(true);
         }
     }
 
@@ -91,10 +104,11 @@ public class Wolf extends TameableMonster {
                 this.attackDelay = 0;
                 HashMap<Integer, Float> damage = new HashMap<>();
                 damage.put(EntityDamageEvent.MODIFIER_BASE, (float) this.getDamage());
-    
+
                 if (player instanceof Player) {
                     @SuppressWarnings("serial")
                     HashMap<Integer, Float> armorValues = new HashMap<Integer, Float>() {
+
                         {
                             put(Item.LEATHER_CAP, 1f);
                             put(Item.LEATHER_TUNIC, 3f);
@@ -118,12 +132,12 @@ public class Wolf extends TameableMonster {
                             put(Item.DIAMOND_BOOTS, 3f);
                         }
                     };
-    
+
                     float points = 0;
                     for (Item i : ((Player) player).getInventory().getArmorContents()) {
                         points += armorValues.getOrDefault(i.getId(), 0f);
                     }
-    
+
                     damage.put(EntityDamageEvent.MODIFIER_ARMOR,
                             (float) (damage.getOrDefault(EntityDamageEvent.MODIFIER_ARMOR, 0f) - Math.floor(damage.getOrDefault(EntityDamageEvent.MODIFIER_BASE, 1f) * points * 0.04)));
                 }
@@ -140,6 +154,17 @@ public class Wolf extends TameableMonster {
     @Override
     public int getKillExperience() {
         return 3; // gain 3 experience
+    }
+
+    /**
+     * Sets the color of the wolves collar (default is 14)
+     * 
+     * @param collarColor the color to be set (when tamed it should be RED)
+     */
+    public void setCollarColor(DyeColor color) {
+        this.namedTag.putInt(NBT_KEY_COLLAR_COLOR, color.getDyeData());
+        this.setDataProperty(new IntEntityData(DATA_COLOUR, color.getColor().getRGB()));
+        this.collarColor = color;
     }
 
 }

@@ -3,7 +3,7 @@
  * 
  * Created on 10:18:38
  */
-package de.kniffo80.mobplugin;
+package de.kniffo80.mobplugin.entities.utils;
 
 import java.util.Random;
 

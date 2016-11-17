@@ -12,9 +12,9 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.timings.Timings;
-import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.WalkingEntity;
 import de.kniffo80.mobplugin.entities.monster.walking.Enderman;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public abstract class WalkingMonster extends WalkingEntity implements Monster {
 

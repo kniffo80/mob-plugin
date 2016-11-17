@@ -5,8 +5,8 @@ import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.animal.WalkingAnimal;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public class Ocelot extends WalkingAnimal {
 

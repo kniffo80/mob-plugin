@@ -14,8 +14,8 @@ import cn.nukkit.item.ItemSwordGold;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.MobEquipmentPacket;
-import de.kniffo80.mobplugin.Utils;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public class PigZombie extends WalkingMonster {
 

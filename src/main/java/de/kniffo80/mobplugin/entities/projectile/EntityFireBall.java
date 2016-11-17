@@ -9,7 +9,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.particle.CriticalParticle;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
-import de.kniffo80.mobplugin.Utils;
+import de.kniffo80.mobplugin.entities.utils.Utils;
 
 public class EntityFireBall extends EntityProjectile {
 
