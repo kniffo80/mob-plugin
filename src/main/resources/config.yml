@@ -1,7 +1,7 @@
 # general settings
 entities:
-  mob-ai: false
-  auto-spawn-tick: 0
+  mob-ai: true
+  auto-spawn-tick: 300
 
 # max spawn settings
 max-spawns:

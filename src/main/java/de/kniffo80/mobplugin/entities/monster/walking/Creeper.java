@@ -198,12 +198,13 @@ public class Creeper extends WalkingMonster implements EntityExplosive {
     }
 
     public void attackEntity(Entity player) {
+        // creepers don't attack, they only explode
     }
 
     @Override
     public Item[] getDrops() {
         List<Item> drops = new ArrayList<>();
-        if (this.exploded) {
+        if (this.exploded && this.isPowered()) {
             // TODO: add creeper head
         }
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
