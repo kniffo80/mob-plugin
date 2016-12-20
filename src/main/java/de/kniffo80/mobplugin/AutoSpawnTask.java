@@ -166,8 +166,9 @@ public class AutoSpawnTask implements Runnable {
                 maxSpawns.get(Zombie.NETWORK_ID), maxSpawns.get(ZombieHorse.NETWORK_ID), maxSpawns.get(ZombieVillager.NETWORK_ID)));
     }
 
-    public boolean entitySpawnAllowed(Level level, int networkId) {
+    public boolean entitySpawnAllowed(Level level, int networkId, String entityName) {
         int count = countEntity(level, networkId);
+        FileLogger.debug(String.format("Found %s/%s living %s", count, maxSpawns.get(networkId), entityName));
         if (count < maxSpawns.get(networkId)) {
             return true;
         }

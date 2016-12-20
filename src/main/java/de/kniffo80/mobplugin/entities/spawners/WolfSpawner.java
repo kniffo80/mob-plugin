@@ -44,7 +44,7 @@ public class WolfSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 1.9, 0));
         }
 
-        FileLogger.info(String.format("Spawn for %s at %s,%s,%s with lightlevel %d and biomeId %d, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, biomeId, result));
+        FileLogger.info(String.format("Wolf spawn for %s at %s,%s,%s with lightlevel %s and biomeId %s, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, biomeId, result));
 
         return result;
     }

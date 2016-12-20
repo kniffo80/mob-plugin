@@ -51,7 +51,7 @@ public class EndermanSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 3.8, 0));
         }
 
-        FileLogger.info(String.format("Spawn for %s at %d,%d,%d with lightlevel %d and blockId %d, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
+        FileLogger.info(String.format("Enderman spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
 
         return result;
     }

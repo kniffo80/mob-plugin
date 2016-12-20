@@ -72,7 +72,7 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
         Position pos = ((Player)iPlayer).getPosition();
         Level level = ((Player)iPlayer).getLevel();
         
-        if (this.spawnTask.entitySpawnAllowed(level, getEntityNetworkId())) {
+        if (this.spawnTask.entitySpawnAllowed(level, getEntityNetworkId(), getEntityName())) {
             if (pos != null) {
                 // get a random safe position for spawn
                 pos.x += this.spawnTask.getRandomSafeXZCoord(50, 26, 6);

@@ -44,7 +44,7 @@ public class ZombieSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 2.8, 0));
         }
 
-        FileLogger.info(String.format("Spawn for %s at %d,%d,%d with lightlevel %d, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, result));
+        FileLogger.info(String.format("Zombie spawn for %s at %s,%s,%s with lightlevel %s, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, result));
 
         return result;
     }
