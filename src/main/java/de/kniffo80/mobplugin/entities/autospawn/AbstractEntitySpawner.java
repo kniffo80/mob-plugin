@@ -5,7 +5,9 @@
  */
 package de.kniffo80.mobplugin.entities.autospawn;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import cn.nukkit.IPlayer;
 import cn.nukkit.OfflinePlayer;
@@ -13,6 +15,7 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
+import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.AutoSpawnTask;
 import de.kniffo80.mobplugin.FileLogger;
 import de.kniffo80.mobplugin.entities.utils.Utils;
@@ -22,13 +25,23 @@ import de.kniffo80.mobplugin.entities.utils.Utils;
  */
 public abstract class AbstractEntitySpawner implements IEntitySpawner {
 
-    protected AutoSpawnTask    spawnTask;
+    protected AutoSpawnTask spawnTask;
 
-    protected Server            server;
+    protected Server        server;
 
-    public AbstractEntitySpawner(AutoSpawnTask spawnTask) {
+    protected List<String>  disabledSpawnWorlds = new ArrayList<>();
+
+    public AbstractEntitySpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
         this.spawnTask = spawnTask;
         this.server = Server.getInstance();
+        String disabledWorlds = pluginConfig.getString("entities.worlds-spawn-disabled");
+        if (disabledWorlds != null && !disabledWorlds.trim().isEmpty()) {
+            StringTokenizer tokenizer = new StringTokenizer(disabledWorlds, ",");
+            while (tokenizer.hasMoreTokens()) {
+                disabledSpawnWorlds.add(tokenizer.nextToken());
+            }
+            FileLogger.debug(String.format("[%s] Disabled spawn for the following worlds: %s", getLogprefix(), disabledSpawnWorlds));
+        }
     }
 
     /*
@@ -41,9 +54,11 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
         if (isSpawnAllowedByDifficulty()) {
             SpawnResult lastSpawnResult = null;
             for (Player player : onlinePlayers) {
-                lastSpawnResult = spawn(player);
-                if (lastSpawnResult.equals(SpawnResult.MAX_SPAWN_REACHED)) {
-                    break;
+                if (isWorldSpawnAllowed (player.getLevel())) {
+                    lastSpawnResult = spawn(player);
+                    if (lastSpawnResult.equals(SpawnResult.MAX_SPAWN_REACHED)) {
+                        break;
+                    }
                 }
             }
             if (lastSpawnResult == null || !lastSpawnResult.equals(SpawnResult.MAX_SPAWN_REACHED)) {
@@ -54,24 +69,38 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
                 }
             }
         } else {
-            FileLogger.debug(String.format("Spawn not allowed because of difficulty [entityName:%s]", getEntityName()));
+            FileLogger.debug(String.format("[%s] Spawn not allowed because of difficulty [entityName:%s]", getLogprefix(), getEntityName()));
         }
-        
+
     }
     
-    protected SpawnResult spawn (IPlayer iPlayer) {
-//        boolean offlinePlayer = iPlayer instanceof OfflinePlayer;
-//
-//        Level level = offlinePlayer ? ((OfflinePlayer) iPlayer).getLevel() : ((Player) iPlayer).getLevel();
-//        
-//        if (!isEntitySpawnAllowed(level)) {
-//            return SpawnResult.MAX_SPAWN_REACHED;
-//        }
-//        
-//        Position pos = offlinePlayer ? ((OfflinePlayer) iPlayer).getLastKnownPosition() : ((Player) iPlayer).getPosition();
-        Position pos = ((Player)iPlayer).getPosition();
-        Level level = ((Player)iPlayer).getLevel();
-        
+    /**
+     * Checks if the given level's name is on blacklist for auto spawn
+     * @param level the level to be checked
+     * @return <code>true</code> when world spawn is allowed
+     */
+    private boolean isWorldSpawnAllowed (Level level) {
+        for (String worldName : this.disabledSpawnWorlds) {
+            if (level.getName().toLowerCase().equals(worldName.toLowerCase())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected SpawnResult spawn(IPlayer iPlayer) {
+        // boolean offlinePlayer = iPlayer instanceof OfflinePlayer;
+        //
+        // Level level = offlinePlayer ? ((OfflinePlayer) iPlayer).getLevel() : ((Player) iPlayer).getLevel();
+        //
+        // if (!isEntitySpawnAllowed(level)) {
+        // return SpawnResult.MAX_SPAWN_REACHED;
+        // }
+        //
+        // Position pos = offlinePlayer ? ((OfflinePlayer) iPlayer).getLastKnownPosition() : ((Player) iPlayer).getPosition();
+        Position pos = ((Player) iPlayer).getPosition();
+        Level level = ((Player) iPlayer).getLevel();
+
         if (this.spawnTask.entitySpawnAllowed(level, getEntityNetworkId(), getEntityName())) {
             if (pos != null) {
                 // get a random safe position for spawn
@@ -79,14 +108,14 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
                 pos.z += this.spawnTask.getRandomSafeXZCoord(50, 26, 6);
                 pos.y = this.spawnTask.getSafeYCoord(level, pos, 3);
             }
-            
+
             if (pos == null) {
                 return SpawnResult.POSITION_MISMATCH;
             }
         } else {
             return SpawnResult.MAX_SPAWN_REACHED;
         }
-        
+
         return spawn(iPlayer, pos, level);
     }
 
@@ -122,4 +151,6 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
         return Difficulty.getByDiffculty(this.server.getDifficulty());
     }
     
+    protected abstract String getLogprefix ();
+
 }

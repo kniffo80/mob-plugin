@@ -111,19 +111,19 @@ public class AutoSpawnTask implements Runnable {
     }
 
     private void prepareSpawnerClasses() {
-        entitySpawners.add(new BatSpawner(this));
-        entitySpawners.add(new ChickenSpawner(this));
-        entitySpawners.add(new CowSpawner(this));
-        entitySpawners.add(new CreeperSpawner(this));
-        entitySpawners.add(new EndermanSpawner(this));
-        entitySpawners.add(new OcelotSpawner(this));
-        entitySpawners.add(new PigSpawner(this));
-        entitySpawners.add(new RabbitSpawner(this));
-        entitySpawners.add(new SheepSpawner(this));
-        entitySpawners.add(new SkeletonSpawner(this));
-        entitySpawners.add(new SpiderSpawner(this));
-        entitySpawners.add(new WolfSpawner(this));
-        entitySpawners.add(new ZombieSpawner(this));
+        entitySpawners.add(new BatSpawner(this, this.pluginConfig));
+        entitySpawners.add(new ChickenSpawner(this, this.pluginConfig));
+        entitySpawners.add(new CowSpawner(this, this.pluginConfig));
+        entitySpawners.add(new CreeperSpawner(this, this.pluginConfig));
+        entitySpawners.add(new EndermanSpawner(this, this.pluginConfig));
+        entitySpawners.add(new OcelotSpawner(this, this.pluginConfig));
+        entitySpawners.add(new PigSpawner(this, this.pluginConfig));
+        entitySpawners.add(new RabbitSpawner(this, this.pluginConfig));
+        entitySpawners.add(new SheepSpawner(this, this.pluginConfig));
+        entitySpawners.add(new SkeletonSpawner(this, this.pluginConfig));
+        entitySpawners.add(new SpiderSpawner(this, this.pluginConfig));
+        entitySpawners.add(new WolfSpawner(this, this.pluginConfig));
+        entitySpawners.add(new ZombieSpawner(this, this.pluginConfig));
         FileLogger.debug(String.format("prepared %d spawner classes", this.entitySpawners.size()));
     }
 

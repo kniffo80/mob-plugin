@@ -9,6 +9,7 @@ import cn.nukkit.IPlayer;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
+import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.AutoSpawnTask;
 import de.kniffo80.mobplugin.FileLogger;
 import de.kniffo80.mobplugin.entities.animal.walking.Chicken;
@@ -25,8 +26,8 @@ public class ChickenSpawner extends AbstractEntitySpawner {
     /**
      * @param spawnTask
      */
-    public ChickenSpawner(AutoSpawnTask spawnTask) {
-        super(spawnTask);
+    public ChickenSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
+        super(spawnTask, pluginConfig);
     }
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
@@ -43,7 +44,7 @@ public class ChickenSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 1.7, 0));
         }
 
-        FileLogger.info(String.format("Chicken spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
+        FileLogger.info(String.format("[%s] spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", getLogprefix(), iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
 
         return result;
     }
@@ -62,6 +63,14 @@ public class ChickenSpawner extends AbstractEntitySpawner {
     @Override
     public String getEntityName() {
         return "Chicken";
+    }
+    
+    /* (@Override)
+     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
+     */
+    @Override
+    protected String getLogprefix() {
+        return this.getClass().getSimpleName();
     }
 
 }

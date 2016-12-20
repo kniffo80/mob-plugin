@@ -9,6 +9,7 @@ import cn.nukkit.IPlayer;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
+import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.AutoSpawnTask;
 import de.kniffo80.mobplugin.FileLogger;
 import de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner;
@@ -26,8 +27,8 @@ public class EndermanSpawner extends AbstractEntitySpawner {
     /**
      * @param spawnTask
      */
-    public EndermanSpawner(AutoSpawnTask spawnTask) {
-        super(spawnTask);
+    public EndermanSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
+        super(spawnTask, pluginConfig);
     }
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
@@ -51,7 +52,7 @@ public class EndermanSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 3.8, 0));
         }
 
-        FileLogger.info(String.format("Enderman spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
+        FileLogger.info(String.format("[%s] spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", getLogprefix(), iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
 
         return result;
     }
@@ -70,6 +71,14 @@ public class EndermanSpawner extends AbstractEntitySpawner {
     @Override
     public String getEntityName() {
         return "Enderman";
+    }
+    
+    /* (@Override)
+     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
+     */
+    @Override
+    protected String getLogprefix() {
+        return this.getClass().getSimpleName();
     }
 
 }

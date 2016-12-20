@@ -10,6 +10,7 @@ import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.generator.biome.Biome;
+import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.AutoSpawnTask;
 import de.kniffo80.mobplugin.FileLogger;
 import de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner;
@@ -26,8 +27,8 @@ public class WolfSpawner extends AbstractEntitySpawner {
     /**
      * @param spawnTask
      */
-    public WolfSpawner(AutoSpawnTask spawnTask) {
-        super(spawnTask);
+    public WolfSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
+        super(spawnTask, pluginConfig);
     }
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
@@ -44,7 +45,7 @@ public class WolfSpawner extends AbstractEntitySpawner {
             this.spawnTask.createEntity(getEntityName(), pos.add(0, 1.9, 0));
         }
 
-        FileLogger.info(String.format("Wolf spawn for %s at %s,%s,%s with lightlevel %s and biomeId %s, result: %s", iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, biomeId, result));
+        FileLogger.info(String.format("[%s] spawn for %s at %s,%s,%s with lightlevel %s and biomeId %s, result: %s", getLogprefix(), iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, biomeId, result));
 
         return result;
     }
@@ -63,6 +64,14 @@ public class WolfSpawner extends AbstractEntitySpawner {
     @Override
     public String getEntityName() {
         return "Wolf";
+    }
+    
+    /* (@Override)
+     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
+     */
+    @Override
+    protected String getLogprefix() {
+        return this.getClass().getSimpleName();
     }
 
 }
