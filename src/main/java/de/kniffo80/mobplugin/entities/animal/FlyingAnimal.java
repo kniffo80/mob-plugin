@@ -41,7 +41,7 @@ public abstract class FlyingAnimal extends FlyingEntity implements EntityAgeable
             int airTicks = this.getDataPropertyShort(DATA_AIR) - tickDiff;
             if (airTicks <= -20) {
                 airTicks = 0;
-                this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_DROWNING, 2));
+                this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
             }
             this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
         } else {

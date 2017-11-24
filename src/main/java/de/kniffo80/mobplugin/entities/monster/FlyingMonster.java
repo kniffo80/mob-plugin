@@ -177,7 +177,7 @@ public abstract class FlyingMonster extends FlyingEntity implements Monster {
             int airTicks = this.getDataPropertyInt(DATA_AIR) - tickDiff;
             if (airTicks <= -20) {
                 airTicks = 0;
-                this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_DROWNING, 2));
+                this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
             }
             this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
         } else {

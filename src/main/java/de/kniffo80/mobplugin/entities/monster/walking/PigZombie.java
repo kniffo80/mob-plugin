@@ -83,8 +83,8 @@ public class PigZombie extends WalkingMonster {
     public void attackEntity(Entity player) {
         if (this.attackDelay > 10 && this.distanceSquared(player) < 1.44) {
             this.attackDelay = 0;
-            HashMap<Integer, Float> damage = new HashMap<>();
-            damage.put(EntityDamageEvent.MODIFIER_BASE, (float) this.getDamage());
+            HashMap<EntityDamageEvent.DamageModifier, Float> damage = new HashMap<>();
+            damage.put(EntityDamageEvent.DamageModifier.BASE, (float) this.getDamage());
 
             if (player instanceof Player) {
                 @SuppressWarnings("serial")
@@ -119,10 +119,10 @@ public class PigZombie extends WalkingMonster {
                     points += armorValues.getOrDefault(i.getId(), 0f);
                 }
 
-                damage.put(EntityDamageEvent.MODIFIER_ARMOR,
-                        (float) (damage.getOrDefault(EntityDamageEvent.MODIFIER_ARMOR, 0f) - Math.floor(damage.getOrDefault(EntityDamageEvent.MODIFIER_BASE, 1f) * points * 0.04)));
+                damage.put(EntityDamageEvent.DamageModifier.ARMOR,
+                        (float) (damage.getOrDefault(EntityDamageEvent.DamageModifier.ARMOR, 0f) - Math.floor(damage.getOrDefault(EntityDamageEvent.DamageModifier.BASE, 1f) * points * 0.04)));
             }
-            player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.CAUSE_ENTITY_ATTACK, damage));
+            player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
         }
     }
 
@@ -135,12 +135,13 @@ public class PigZombie extends WalkingMonster {
     }
 
     @Override
-    public void attack(EntityDamageEvent ev) {
+    public boolean attack(EntityDamageEvent ev) {
         super.attack(ev);
 
         if (!ev.isCancelled()) {
             this.setAngry(1000);
         }
+        return true;
     }
 
     @Override
@@ -150,8 +151,8 @@ public class PigZombie extends WalkingMonster {
         MobEquipmentPacket pk = new MobEquipmentPacket();
         pk.eid = this.getId();
         pk.item = new ItemSwordGold();
-        pk.slot = 10;
-        pk.selectedSlot = 10;
+        pk.inventorySlot = 10;
+        pk.inventorySlot = 10;
         player.dataPacket(pk);
     }
 

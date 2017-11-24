@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
@@ -39,6 +40,11 @@ public class Pig extends WalkingAnimal implements EntityRideable {
     @Override
     public float getEyeHeight() {
         return 0.9f;
+    }
+
+    @Override
+    public boolean mountEntity(Entity entity){
+        return true;
     }
 
     public void initEntity() {

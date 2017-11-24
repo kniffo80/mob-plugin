@@ -20,6 +20,8 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
 import de.kniffo80.mobplugin.entities.utils.Utils;
 
+import static cn.nukkit.math.Vector3f.*;
+
 public class Spider extends WalkingMonster {
 
     public static final int NETWORK_ID = 35;
@@ -177,9 +179,8 @@ public class Spider extends WalkingMonster {
             }
         }
 
-        int[] sides = { Block.SIDE_SOUTH, Block.SIDE_WEST, Block.SIDE_NORTH, Block.SIDE_EAST };
         Block block = this.getLevel().getBlock(new Vector3(NukkitMath.floorDouble(this.x + dx), (int) this.y, NukkitMath.floorDouble(this.z + dz)));
-        Block directionBlock = block.getSide(sides[this.getDirection()]);
+        Block directionBlock = block.getSide(this.getDirection());
         if (!directionBlock.canPassThrough()) {
             this.motionY = this.getGravity() * 3;
             return true;
@@ -196,8 +197,8 @@ public class Spider extends WalkingMonster {
     public void attackEntity(Entity player) {
         if (!this.isFriendly() || !(player instanceof Player)) {
             this.attackDelay = 0;
-            HashMap<Integer, Float> damage = new HashMap<>();
-            damage.put(EntityDamageEvent.MODIFIER_BASE, (float) this.getDamage());
+            HashMap<EntityDamageEvent.DamageModifier, Float> damage = new HashMap<>();
+            damage.put(EntityDamageEvent.DamageModifier.BASE, (float) this.getDamage());
 
             if (player instanceof Player) {
                 @SuppressWarnings("serial")
@@ -231,10 +232,10 @@ public class Spider extends WalkingMonster {
                 for (Item i : ((Player) player).getInventory().getArmorContents()) {
                     points += armorValues.getOrDefault(i.getId(), 0f);
                 }
-                damage.put(EntityDamageEvent.MODIFIER_ARMOR,
-                        (float) (damage.getOrDefault(EntityDamageEvent.MODIFIER_ARMOR, 0f) - Math.floor(damage.getOrDefault(EntityDamageEvent.MODIFIER_BASE, 1f) * points * 0.04)));
+                damage.put(EntityDamageEvent.DamageModifier.ARMOR,
+                        (float) (damage.getOrDefault(EntityDamageEvent.DamageModifier.ARMOR, 0f) - Math.floor(damage.getOrDefault(EntityDamageEvent.DamageModifier.BASE, 1f) * points * 0.04)));
             }
-            player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.CAUSE_ENTITY_ATTACK, damage));
+            player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
         }
     }
 
