@@ -40,6 +40,7 @@ public class Mooshroom extends WalkingAnimal {
         this.setMaxHealth(10);
     }
 
+    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;

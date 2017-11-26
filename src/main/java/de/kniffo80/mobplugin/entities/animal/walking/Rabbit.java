@@ -45,10 +45,11 @@ public class Rabbit extends WalkingAnimal {
         this.setMaxHealth(3);
     }
 
+    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
-            return player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.SEEDS && distance <= 49;
+            return player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.CARROT && distance <= 49;
         }
         return false;
     }

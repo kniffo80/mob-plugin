@@ -56,6 +56,8 @@ max-spawns:
   skeleton-horse: 0
   snow-golem: 0
   spider: 0
+  squid: 0
+  witch: 0
   wolf: 1
   zombie: 0
   zombie-horse: 0
