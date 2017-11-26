@@ -1,6 +1,7 @@
 # Nukkit Mob Plugin
 Development: **[kniffo80](https://github.com/kniffo80)**
              **[matt404](https://github.com/matt404)**
+             **[augesrob](https://github.com/augesrob)**
 
 MobPlugin is a plugin that implements the mob entities for MCPE including movement, aggression etc.
 
@@ -8,7 +9,9 @@ MobPlugin is a plugin that implements the mob entities for MCPE including moveme
 #### Welcome Github issue!
 This plug-in is in development. Therefore, It is possible to function abnormally.
 
-[![Discord](https://discordapp.com/api/guilds/331619998059593738/widget.png)](https://scarsz.me/discord)
+[![Nukkit.io](https://avatars0.githubusercontent.com/u/16732323?s=70&v=4)](https://forums.nukkit.io/resources/mobplugin.155/)
+
+[![Discord](https://discordapp.com/api/guilds/331619998059593738/widget.png)](https://discord.gg/tDfqkNB)
 
 # Credits
 Credits go to Team-SW! They have a nice plugin already made. I used it and adapt it for 0.16.
