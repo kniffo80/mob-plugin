@@ -16,8 +16,6 @@ import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.animal.Animal;
 import de.kniffo80.mobplugin.entities.utils.Utils;
 
-import static cn.nukkit.math.Vector3f.*;
-
 public abstract class WalkingEntity extends BaseEntity {
 
     public WalkingEntity(FullChunk chunk, CompoundTag nbt) {

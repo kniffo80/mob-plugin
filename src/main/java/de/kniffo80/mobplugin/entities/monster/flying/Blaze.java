@@ -1,8 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.flying;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockFence;
 import cn.nukkit.block.BlockFenceGate;
@@ -27,7 +24,8 @@ import de.kniffo80.mobplugin.entities.monster.FlyingMonster;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
 import de.kniffo80.mobplugin.entities.utils.Utils;
 
-import static cn.nukkit.math.Vector3f.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Blaze extends FlyingMonster {
 

@@ -1,9 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.walking;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockLiquid;
@@ -20,7 +16,9 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
 import de.kniffo80.mobplugin.entities.utils.Utils;
 
-import static cn.nukkit.math.Vector3f.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Spider extends WalkingMonster {
 

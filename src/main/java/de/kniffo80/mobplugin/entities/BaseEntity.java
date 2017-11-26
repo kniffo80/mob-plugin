@@ -1,8 +1,5 @@
 package de.kniffo80.mobplugin.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
@@ -21,6 +18,9 @@ import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
 import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.monster.Monster;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseEntity extends EntityCreature {
 

@@ -1,9 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.walking;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,6 +10,10 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
 import de.kniffo80.mobplugin.entities.utils.Utils;
 import de.kniffo80.mobplugin.items.MobPluginItems;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Enderman extends WalkingMonster {
 

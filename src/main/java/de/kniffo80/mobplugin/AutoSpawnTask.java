@@ -1,10 +1,5 @@
 package de.kniffo80.mobplugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.nukkit.IPlayer;
 import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
@@ -14,47 +9,18 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
 import de.kniffo80.mobplugin.entities.animal.flying.Bat;
-import de.kniffo80.mobplugin.entities.animal.walking.Chicken;
-import de.kniffo80.mobplugin.entities.animal.walking.Cow;
-import de.kniffo80.mobplugin.entities.animal.walking.Donkey;
-import de.kniffo80.mobplugin.entities.animal.walking.Horse;
-import de.kniffo80.mobplugin.entities.animal.walking.Mooshroom;
-import de.kniffo80.mobplugin.entities.animal.walking.Mule;
-import de.kniffo80.mobplugin.entities.animal.walking.Ocelot;
-import de.kniffo80.mobplugin.entities.animal.walking.Pig;
-import de.kniffo80.mobplugin.entities.animal.walking.Rabbit;
-import de.kniffo80.mobplugin.entities.animal.walking.Sheep;
-import de.kniffo80.mobplugin.entities.animal.walking.SkeletonHorse;
-import de.kniffo80.mobplugin.entities.animal.walking.ZombieHorse;
+import de.kniffo80.mobplugin.entities.animal.walking.*;
 import de.kniffo80.mobplugin.entities.autospawn.IEntitySpawner;
 import de.kniffo80.mobplugin.entities.monster.flying.Blaze;
 import de.kniffo80.mobplugin.entities.monster.flying.Ghast;
-import de.kniffo80.mobplugin.entities.monster.walking.CaveSpider;
-import de.kniffo80.mobplugin.entities.monster.walking.Creeper;
-import de.kniffo80.mobplugin.entities.monster.walking.Enderman;
-import de.kniffo80.mobplugin.entities.monster.walking.IronGolem;
-import de.kniffo80.mobplugin.entities.monster.walking.PigZombie;
-import de.kniffo80.mobplugin.entities.monster.walking.Silverfish;
-import de.kniffo80.mobplugin.entities.monster.walking.Skeleton;
-import de.kniffo80.mobplugin.entities.monster.walking.SnowGolem;
-import de.kniffo80.mobplugin.entities.monster.walking.Spider;
-import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
-import de.kniffo80.mobplugin.entities.monster.walking.Zombie;
-import de.kniffo80.mobplugin.entities.monster.walking.ZombieVillager;
-import de.kniffo80.mobplugin.entities.spawners.BatSpawner;
-import de.kniffo80.mobplugin.entities.spawners.ChickenSpawner;
-import de.kniffo80.mobplugin.entities.spawners.CowSpawner;
-import de.kniffo80.mobplugin.entities.spawners.CreeperSpawner;
-import de.kniffo80.mobplugin.entities.spawners.EndermanSpawner;
-import de.kniffo80.mobplugin.entities.spawners.OcelotSpawner;
-import de.kniffo80.mobplugin.entities.spawners.PigSpawner;
-import de.kniffo80.mobplugin.entities.spawners.RabbitSpawner;
-import de.kniffo80.mobplugin.entities.spawners.SheepSpawner;
-import de.kniffo80.mobplugin.entities.spawners.SkeletonSpawner;
-import de.kniffo80.mobplugin.entities.spawners.SpiderSpawner;
-import de.kniffo80.mobplugin.entities.spawners.WolfSpawner;
-import de.kniffo80.mobplugin.entities.spawners.ZombieSpawner;
+import de.kniffo80.mobplugin.entities.monster.walking.*;
+import de.kniffo80.mobplugin.entities.spawners.*;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class AutoSpawnTask implements Runnable {

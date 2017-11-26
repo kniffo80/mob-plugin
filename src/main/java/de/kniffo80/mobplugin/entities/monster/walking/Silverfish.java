@@ -1,7 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.walking;
 
-import java.util.HashMap;
-
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
@@ -10,6 +8,8 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
+
+import java.util.HashMap;
 
 public class Silverfish extends WalkingMonster {
 

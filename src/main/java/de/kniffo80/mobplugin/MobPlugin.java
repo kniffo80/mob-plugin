@@ -5,10 +5,6 @@
  */
 package de.kniffo80.mobplugin;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.IPlayer;
 import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
@@ -36,7 +32,6 @@ import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.BlockFace;
-import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
@@ -48,43 +43,18 @@ import cn.nukkit.utils.DyeColor;
 import de.kniffo80.mobplugin.entities.BaseEntity;
 import de.kniffo80.mobplugin.entities.animal.flying.Bat;
 import de.kniffo80.mobplugin.entities.animal.swimming.Squid;
-import de.kniffo80.mobplugin.entities.animal.walking.Chicken;
-import de.kniffo80.mobplugin.entities.animal.walking.Cow;
-import de.kniffo80.mobplugin.entities.animal.walking.Donkey;
-import de.kniffo80.mobplugin.entities.animal.walking.Horse;
-import de.kniffo80.mobplugin.entities.animal.walking.Mooshroom;
-import de.kniffo80.mobplugin.entities.animal.walking.Mule;
-import de.kniffo80.mobplugin.entities.animal.walking.Ocelot;
-import de.kniffo80.mobplugin.entities.animal.walking.Pig;
-import de.kniffo80.mobplugin.entities.animal.walking.Rabbit;
-import de.kniffo80.mobplugin.entities.animal.walking.Sheep;
-import de.kniffo80.mobplugin.entities.animal.walking.SkeletonHorse;
-import de.kniffo80.mobplugin.entities.animal.walking.ZombieHorse;
+import de.kniffo80.mobplugin.entities.animal.walking.*;
 import de.kniffo80.mobplugin.entities.block.BlockEntitySpawner;
 import de.kniffo80.mobplugin.entities.monster.flying.Blaze;
 import de.kniffo80.mobplugin.entities.monster.flying.Ghast;
-import de.kniffo80.mobplugin.entities.monster.walking.CaveSpider;
-import de.kniffo80.mobplugin.entities.monster.walking.Creeper;
-import de.kniffo80.mobplugin.entities.monster.walking.Enderman;
-import de.kniffo80.mobplugin.entities.monster.walking.IronGolem;
-import de.kniffo80.mobplugin.entities.monster.walking.PigZombie;
-import de.kniffo80.mobplugin.entities.monster.walking.Silverfish;
-import de.kniffo80.mobplugin.entities.monster.walking.Skeleton;
-import de.kniffo80.mobplugin.entities.monster.walking.SnowGolem;
-import de.kniffo80.mobplugin.entities.monster.walking.Spider;
-import de.kniffo80.mobplugin.entities.monster.walking.Witch;
-import de.kniffo80.mobplugin.entities.monster.walking.Wolf;
-import de.kniffo80.mobplugin.entities.monster.walking.Zombie;
-import de.kniffo80.mobplugin.entities.monster.walking.ZombieVillager;
+import de.kniffo80.mobplugin.entities.monster.walking.*;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
 import de.kniffo80.mobplugin.entities.utils.Utils;
-import de.kniffo80.mobplugin.items.ItemEnderPearl;
-import de.kniffo80.mobplugin.items.ItemInkSac;
-import de.kniffo80.mobplugin.items.ItemMuttonCooked;
-import de.kniffo80.mobplugin.items.ItemMuttonRaw;
-import de.kniffo80.mobplugin.items.MobPluginItems;
+import de.kniffo80.mobplugin.items.*;
 
-import static cn.nukkit.math.Vector3f.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>

@@ -1,7 +1,5 @@
 package de.kniffo80.mobplugin.entities.block;
 
-import java.util.ArrayList;
-
 import cn.nukkit.Player;
 import cn.nukkit.blockentity.BlockEntitySpawnable;
 import cn.nukkit.entity.Entity;
@@ -12,6 +10,8 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ShortTag;
 import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
 
 public class BlockEntitySpawner extends BlockEntitySpawnable{
 

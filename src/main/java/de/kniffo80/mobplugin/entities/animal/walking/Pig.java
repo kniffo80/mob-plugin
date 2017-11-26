@@ -1,8 +1,5 @@
 package de.kniffo80.mobplugin.entities.animal.walking;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
@@ -13,6 +10,9 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.animal.WalkingAnimal;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pig extends WalkingAnimal implements EntityRideable {
 

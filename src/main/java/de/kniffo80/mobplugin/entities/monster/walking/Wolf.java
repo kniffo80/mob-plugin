@@ -1,7 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.walking;
 
-import java.util.HashMap;
-
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
@@ -14,6 +12,8 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
 import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.monster.TameableMonster;
+
+import java.util.HashMap;
 
 public class Wolf extends TameableMonster {
 

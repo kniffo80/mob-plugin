@@ -1,8 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.walking;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.projectile.EntityArrow;
@@ -22,6 +19,9 @@ import cn.nukkit.network.protocol.MobEquipmentPacket;
 import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.monster.WalkingMonster;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Skeleton extends WalkingMonster {
 

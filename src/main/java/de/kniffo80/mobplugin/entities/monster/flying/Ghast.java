@@ -1,8 +1,5 @@
 package de.kniffo80.mobplugin.entities.monster.flying;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
@@ -18,6 +15,9 @@ import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.monster.FlyingMonster;
 import de.kniffo80.mobplugin.entities.projectile.EntityFireBall;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ghast extends FlyingMonster {
 
