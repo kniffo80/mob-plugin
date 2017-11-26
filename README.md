@@ -9,7 +9,7 @@ MobPlugin is a plugin that implements the mob entities for MCPE including moveme
 #### Welcome Github issue!
 This plug-in is in development. Therefore, It is possible to function abnormally.
 
-[![Nukkit.io](https://img.shields.io/jenkins/plugin/v/blueocean.svg)](https://forums.nukkit.io/resources/mobplugin.155/)
+[![Nukkit.io](https://img.shields.io/badge/Nukkit%20MobPlugin-Download-yellow.svg)](https://forums.nukkit.io/resources/mobplugin.155/)
 [![Discord](https://discordapp.com/api/guilds/331619998059593738/widget.png)](https://discord.gg/tDfqkNB)
 
 # Credits
