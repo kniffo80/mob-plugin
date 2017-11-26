@@ -1,5 +1,7 @@
 # Nukkit Mob Plugin
-Development: **[kniffo80](https://github.com/kniffo80)**
+Credits: **[kniffo80](https://github.com/kniffo80)**
+
+Development: **[matt404](https://github.com/matt404)**
 
 MobPlugin is a plugin that implements the mob entities for MCPE including movement, aggression etc.
 
