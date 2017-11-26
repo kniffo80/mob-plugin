@@ -7,6 +7,9 @@ MobPlugin is a plugin that implements the mob entities for MCPE including moveme
 #### Welcome Github issue!
 This plug-in is in development. Therefore, It is possible to function abnormally.
 
+![DiscordSRV Logo](http://i.imgur.com/VTJtlli.png)
+[![Discord](https://discordapp.com/api/guilds/331619998059593738/widget.png)](https://scarsz.me/discord)
+
 # Credits
 Credits go to Team-SW! They have a nice plugin already made. I used it and adapt it for 0.16.
 
