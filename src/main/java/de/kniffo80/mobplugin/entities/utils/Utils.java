@@ -5,10 +5,10 @@
  */
 package de.kniffo80.mobplugin.entities.utils;
 
-import java.util.Random;
-
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
+
+import java.util.Random;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>

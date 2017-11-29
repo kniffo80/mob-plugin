@@ -1,11 +1,16 @@
 # Nukkit Mob Plugin
 Development: **[kniffo80](https://github.com/kniffo80)**
+             **[matt404](https://github.com/matt404)**
+             **[augesrob](https://github.com/augesrob)**
 
 MobPlugin is a plugin that implements the mob entities for MCPE including movement, aggression etc.
 
 ## Notice
 #### Welcome Github issue!
 This plug-in is in development. Therefore, It is possible to function abnormally.
+
+[![Nukkit.io](https://img.shields.io/badge/Nukkit%20MobPlugin-Download-yellow.svg)](https://forums.nukkit.io/resources/mobplugin.155/)
+[![Discord](https://discordapp.com/api/guilds/331619998059593738/widget.png)](https://discord.gg/tDfqkNB)
 
 # Credits
 Credits go to Team-SW! They have a nice plugin already made. I used it and adapt it for 0.16.
@@ -56,6 +61,8 @@ max-spawns:
   skeleton-horse: 0
   snow-golem: 0
   spider: 0
+  squid: 0
+  witch: 0
   wolf: 1
   zombie: 0
   zombie-horse: 0

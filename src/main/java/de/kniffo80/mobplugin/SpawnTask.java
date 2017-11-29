@@ -5,9 +5,6 @@
  */
 package de.kniffo80.mobplugin;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -15,6 +12,9 @@ import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (mige)</a>

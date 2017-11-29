@@ -5,8 +5,6 @@
  */
 package de.kniffo80.mobplugin.entities.animal.walking;
 
-import cn.nukkit.Player;
-import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -46,15 +44,6 @@ public class ZombieHorse extends WalkingAnimal {
     public void initEntity() {
         super.initEntity();
         this.setMaxHealth(15);
-    }
-
-    @Override
-    public boolean targetOption(EntityCreature creature, double distance) {
-        if (creature instanceof Player) {
-            Player player = (Player) creature;
-            return player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.SEEDS && distance <= 49;
-        }
-        return false;
     }
 
     @Override

@@ -64,8 +64,9 @@ public class Witch extends WalkingMonster {
     }
 
     @Override
-    public void attack(EntityDamageEvent ev) {
+    public boolean attack(EntityDamageEvent ev) {
         super.attack(ev);
+        return true;
     }
 
     /*

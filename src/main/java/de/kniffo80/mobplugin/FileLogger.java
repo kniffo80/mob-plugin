@@ -5,12 +5,12 @@
  */
 package de.kniffo80.mobplugin;
 
+import cn.nukkit.Server;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
-
-import cn.nukkit.Server;
 
 /**
  * A simple file logger for logging into separate files

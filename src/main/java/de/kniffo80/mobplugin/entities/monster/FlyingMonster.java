@@ -8,7 +8,6 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
-import de.kniffo80.mobplugin.MobPlugin;
 import de.kniffo80.mobplugin.entities.FlyingEntity;
 import de.kniffo80.mobplugin.entities.utils.Utils;
 
@@ -177,7 +176,7 @@ public abstract class FlyingMonster extends FlyingEntity implements Monster {
             int airTicks = this.getDataPropertyInt(DATA_AIR) - tickDiff;
             if (airTicks <= -20) {
                 airTicks = 0;
-                this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_DROWNING, 2));
+                this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
             }
             this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
         } else {

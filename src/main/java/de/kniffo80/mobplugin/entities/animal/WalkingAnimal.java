@@ -7,7 +7,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
-import cn.nukkit.timings.Timings;
+import co.aikar.timings.Timings;
 import de.kniffo80.mobplugin.entities.WalkingEntity;
 
 public abstract class WalkingAnimal extends WalkingEntity implements Animal {
@@ -44,7 +44,7 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
             int airTicks = this.getDataPropertyShort(DATA_AIR) - tickDiff;
             if (airTicks <= -20) {
                 airTicks = 0;
-                this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_DROWNING, 2));
+                this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
             }
             this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
         } else {

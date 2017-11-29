@@ -1,9 +1,7 @@
 package de.kniffo80.mobplugin.entities.animal.walking;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
@@ -12,6 +10,9 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import de.kniffo80.mobplugin.entities.animal.WalkingAnimal;
 import de.kniffo80.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pig extends WalkingAnimal implements EntityRideable {
 
@@ -41,15 +42,26 @@ public class Pig extends WalkingAnimal implements EntityRideable {
         return 0.9f;
     }
 
+    @Override
+    public boolean mountEntity(Entity entity){
+        return true;
+    }
+
     public void initEntity() {
         super.initEntity();
         this.setMaxHealth(10);
     }
 
+    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
-            return player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.CARROT && distance <= 49;
+            return player.spawned && player.isAlive() && !player.closed &&
+                (player.getInventory().getItemInHand().getId() == Item.CARROT ||
+                    player.getInventory().getItemInHand().getId() == Item.POTATO ||
+                    player.getInventory().getItemInHand().getId() == Item.BEETROOT
+                )
+                && distance <= 49;
         }
         return false;
     }
